@@ -11,12 +11,9 @@ logo_lien <- "https://www.facebook.com/esicongo"
 titre_onglet1 <- "Vue des données"
 
 ######### Select dans onglet 1 ##############
-if(subset_2){
-  label1_select_2 <- subset_2_names[1]
-} else {
-  label1_select_2 <- "test"
-  label1_select_3 <- substring(subset_2_names[1],10)
-}
+label1_select_1 <- substring(subset_2_names[1],10)
+label1_select_2 <- "test"
+label1_select_3 <- substring(subset_2_names[1],10)
 
 
 ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, style="margin-top: -15px",height ="50" ,width ="179" ), href=logo_lien, target ="_blank")),
@@ -24,15 +21,9 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                           ######Sidebar Layout######
                           sidebarLayout(
                             sidebarPanel(
-                              conditionalPanel(
-                                condition = "output.subset_2 == TRUE",
-                                selectInput("subset_2",label= label1_select_1,choices = c("whole",levels(dat[,subset_2_names])),selected = "whole",multiple=TRUE),
-                              ),
-                              conditionalPanel(
-                                condition = "output.subset_2 == FALSE",
-                                selectInput("subset_2_1",label = label1_select_2,choices = c(substring(subset_2_names,10))),
-                                selectInput("subset_2_2",label = label1_select_3,choices = paste("whole",dat[,subset_2_names[1]]),multiple = TRUE,selected ="whole"),
-                              ),
+                              selectInput("subset_2",label= paste("Select",label1_select_1),choices = c("whole",levels(dat[,subset_2_names])),selected = "whole",multiple=TRUE),
+                              selectInput("subset_2_1",label = label1_select_2,choices = c(substring(subset_2_names,10))),
+                              selectInput("subset_2_2",label = label1_select_3,choices = paste("whole",dat[,subset_2_names[1]]),multiple = TRUE,selected ="whole"),
                               ###################
                               checkboxInput("checkbox", label = "Display weighted data : Number of bush meat occurrences divided by number of visits", value = FALSE),
                               checkboxInput("checkboxlog", label = "Display logarithmic scale for y axis", value = FALSE),

@@ -5,6 +5,12 @@ server <- function(input, output, session) {
     observe({
       subset_2_1_value <- input$subset_2_1
       updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected ="whole")
+      removeUI(".shiny-input-container:has(#subset_2)",immediate = TRUE)
+    })
+  } else {
+    observe({
+      removeUI(selector = ".shiny-input-container:has(#subset_2_1)",immediate = TRUE)
+      removeUI(selector = ".shiny-input-container:has(#subset_2_2)",immediate = TRUE)
     })
   }
   ######Plotly#####
@@ -79,7 +85,7 @@ server <- function(input, output, session) {
     #####################
     dat_cut <- dat_cut_subset_2
     annee_cut<-substring(dat_cut[,"subset_date.date"],1,4)
-    b_an <- data.frame(table(tolower(dat_cut$subset_2.espece),dat_cut$QUANTITE,annee_cut))
+    b_an <- data.frame(table(tolower(dat_cut$subset_2.espece),dat_cut$quantity.quantite,annee_cut))
     b_an$Var2 <- as.numeric(b_an$Var2)
     b_an$freq <- as.numeric(b_an$Freq)
     b_an$Freq <- b_an$Var2*b_an$Freq

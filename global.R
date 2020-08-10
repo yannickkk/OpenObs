@@ -23,6 +23,16 @@ library(rdrop2)
 library(data.table)
 
 
+####Explication des variables#########
+
+#subset_n <- TRUE or FALSE si multiple ou simple
+#subset_n_names <- contient le nom des colonnes de subset
+#subset_n_value <- contient les valeurs sélectionnées
+#dat_cut_subset_n <- Data frame après tri en fonction du subset
+#dat_cut_subset_n-1 <- Data frame avant le tri en fonction du subset
+
+#######################################
+
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 #source("scripts/user_base.R")
 #source("scripts/access_drive.R")
@@ -30,10 +40,10 @@ library(data.table)
 dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
 ########si des quantites manquent on les remplace par 1 car lespece est presente
-if ("QUANTITE"%in% colnames(dat)){
-  dat$QUANTITE <- replace(dat$QUANTITE,is.na(dat$QUANTITE),1)
+if ("quantity.quantite"%in% colnames(dat)){
+  dat$quantity.quantite <- replace(dat$quantity.quantite,is.na(dat$quantity.quantite),1)
 } else {
-  dat$QUANTITE <- 1
+  dat$quantity.quantite <- 1
 }
 
 if (length(grep("subset_2",names(dat))) > 1){
@@ -67,5 +77,3 @@ xaxis <- list(
 )
 
 ########################################################
-
-test
