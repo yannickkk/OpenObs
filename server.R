@@ -1,91 +1,47 @@
 # Define server logic 
 server <- function(input, output, session) {
   
-  if (!subset_2){
-    observe({
-      subset_2_1_value <- input$subset_2_1
-      updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected ="whole")
-      removeUI(".shiny-input-container:has(#subset_2)",immediate = TRUE)
-    })
-  } else {
-    observe({
-      removeUI(selector = ".shiny-input-container:has(#subset_2_1)",immediate = TRUE)
-      removeUI(selector = ".shiny-input-container:has(#subset_2_2)",immediate = TRUE)
-    })
-  }
+  ######Mise en place de l'UI#######
+  source("scripts/update_UI_subset.R", local= TRUE)
+  
+  #####################################
+  
   ######Plotly#####
   output$plotly <- renderPlotly({
     
-    #####Checking subset_2####
-    if(subset_2){
-      subset_2_value <- input$subset_2
-      if("whole"%in%subset_2_value & length(subset_2_value) > 1) {
-        observe({
-          updateSelectInput(session,"subset_2",label = label1_select_2, choices = c("whole",levels(dat[,subset_2_names])),selected = subset_2_value[2])
-        })
-      }
-      dat_cut_subset_2<- dat
-      if ("whole"%in%subset_2_value){
-        dat_cut_subset_2 <- dat
-      } else {
-        dat_cut_subset_2 <- dat[which(dat[,subset_2_names] == subset_2_value[1]),]
-        if (length(subset_2_value) > 1){
-          for (i in 2:length(subset_2_value)){
-            dat_cut_subset_2 <- rbind(dat_cut_subset_2,dat[which(dat[,subset_2_names] == subset_2_value[i]),])
-          }
-        }
-        dat_cut_subset_2[,subset_2_names] <- factor(dat_cut_subset_2[,subset_2_names],exclude=NULL)
-      }
-      #############
+    if(subset_1_valid){
+      source("scripts/subset_1_dataCreate.R", local = TRUE)
     } else {
-      #####Multiple#####
-      
-      subset_2_2_value <- input$subset_2_2
-      
-      if ("whole"%in%subset_2_2_value & length(subset_2_2_value) > 1) {
-        if(subset_2_2_value[1] == "whole") {
-          observe({
-            updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected = subset_2_2_value[2])
-          })
-        } else {
-          observe({
-            updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected = subset_2_2_value[length(subset_2_2_value)])
-          })
-        }
-        
-      }
-      
-      subset_2_1_value <- input$subset_2_1
-      
-      
-      dat_cut_subset_2 <- dat
-      if ("whole"%in%subset_2_2_value){
-        dat_cut_subset_2 <- dat
-      } else {
-        dat_cut_subset_2 <- dat[which(dat[,paste("subset_2.",subset_2_1_value,sep="")] == subset_2_2_value[1]),]
-        if (length(subset_2_2_value)>1){
-          for (i in 2:length(subset_2_2_value)){
-            dat_cut_subset_2 <- rbind(dat_cut_subset_2,dat[which(dat[,paste("subset_2.",subset_2_1_value,sep="")] == subset_2_2_value[i]),])
-          }
-        }
-        dat_cut_subset_2[,"subset_2.espece"] <- factor(dat_cut_subset_2[,"subset_2.espece"],exclude=NULL)
-      }
-    }
-    ########################
-    #####Checking date#####
-    dates_2 <- as.numeric(substring(input$dates,1,4))
-    i <- dates_2[1]
-    dates <- as.character(i)
-    i <- i+1
-    while (i != dates_2[2]+1) {
-      dates <- c(dates,as.character(i))
-      i <- i+1
+      dat_cut_subset_1 <- dat
     }
     
+    if(subset_2_valid){
+      source("scripts/subset_2_dataCreate.R", local = TRUE)
+    } else {
+      dat_cut_subset_2 <- dat_cut_subset_1
+    }
+    
+    if(subset_3_valid){
+      source("scripts/subset_3_dataCreate.R", local = TRUE)
+    } else {
+      dat_cut_subset_3 <- dat_cut_subset_2
+    }
+    
+    if(subset_4_valid){
+      source("scripts/subset_4_dataCreate.R", local = TRUE)
+    } else {
+      dat_cut_subset_4 <- dat_cut_subset_3
+    }
+    
+    #####Checking date#####
+    source("scripts/checking_date.R", local = TRUE)
+    ######################
+    
     #####################
-    dat_cut <- dat_cut_subset_2
+    dat_cut <- dat_cut_subset_4
+    
     annee_cut<-substring(dat_cut[,"subset_date.date"],1,4)
-    b_an <- data.frame(table(tolower(dat_cut$subset_2.espece),dat_cut$quantity.quantite,annee_cut))
+    b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$quantity.quantite,annee_cut))
     b_an$Var2 <- as.numeric(b_an$Var2)
     b_an$freq <- as.numeric(b_an$Freq)
     b_an$Freq <- b_an$Var2*b_an$Freq
@@ -162,5 +118,6 @@ server <- function(input, output, session) {
       py_b_an
       ############################
     }
+
   })
 }
