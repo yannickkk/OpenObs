@@ -5,7 +5,7 @@ Elle est destinée à l'affichage d'observations répétées dans le temps et tr
 Elle est une aide pour les personnels impliquées dans le traitement des données car elle permet des tries variés des données en appliquant des rêgles simples de nommage des colonnes du jeu de données.
 Elle peut être déployée rapidement sur serveur afin de pouvoir partagée cette visualisation des données localement ou sur l'ensemble du réseau internet.
 
-Elle présente les fonctionnalités suivantes:
+# Elle offre les fonctionnalités suivantes:
 
    ## d'un afficheur graphique permettant de représenter le nombre d'observations au cours du temps:
    
