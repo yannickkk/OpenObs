@@ -15,15 +15,15 @@ Elle peut être déployée rapidement sur serveur afin de pouvoir partagée cett
       
   ![image](https://user-images.githubusercontent.com/39738426/89901696-c22dda00-dbe5-11ea-9513-8a3a671c6223.png)
 
-   ## d'un affichage d'informations sur les espèces contactées:
+   ## Un affichage d'informations sur les espèces contactées:
   
   ![image](https://user-images.githubusercontent.com/39738426/89902910-52205380-dbe7-11ea-95ab-e68cc8a1db76.png)
 
-   ## d'un lien vers des baes de données distantes d'information sur les espèces:
+   ## Un lien vers des baes de données distantes d'information sur les espèces:
   
   ![image](https://user-images.githubusercontent.com/39738426/89902977-649a8d00-dbe7-11ea-99b7-fe977f5d5b63.png)
 
-   ## de la présentation du protocole de collecte des données:
+   ## Une présentation du protocole de collecte des données:
   
   ![image](https://user-images.githubusercontent.com/39738426/89903067-7e3bd480-dbe7-11ea-8b99-44eef0ac0619.png) 
 
