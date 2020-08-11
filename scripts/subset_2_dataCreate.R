@@ -1,0 +1,55 @@
+#####Checking subset_2####
+if(subset_2){
+  subset_2_value <- input$subset_2
+  if("whole"%in%subset_2_value & length(subset_2_value) > 1) {
+    observe({
+      updateSelectInput(session,"subset_2",label = label1_select_2, choices = c("whole",levels(dat[,subset_2_names])),selected = subset_2_value[2])
+    })
+  }
+  dat_cut_subset_2<- dat
+  if ("whole"%in%subset_2_value){
+    dat_cut_subset_2 <- dat
+  } else {
+    dat_cut_subset_2 <- dat[which(dat[,subset_2_names] == subset_2_value[1]),]
+    if (length(subset_2_value) > 1){
+      for (i in 2:length(subset_2_value)){
+        dat_cut_subset_2 <- rbind(dat_cut_subset_2,dat[which(dat[,subset_2_names] == subset_2_value[i]),])
+      }
+    }
+    dat_cut_subset_2[,subset_2_names] <- factor(dat_cut_subset_2[,subset_2_names],exclude=NULL)
+  }
+  #############
+} else {
+  #####Multiple#####
+  subset_2_2_value <- input$subset_2_2
+  
+  if ("whole"%in%subset_2_2_value & length(subset_2_2_value) > 1) {
+    if(subset_2_2_value[1] == "whole") {
+      observe({
+        updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected = subset_2_2_value[2])
+      })
+    } else {
+      observe({
+        updateSelectInput(session,"subset_2_2",label = paste('Select ',subset_2_1_value),choices = c("whole",levels(dat[,paste("subset_2.",subset_2_1_value,sep="")])),selected = subset_2_2_value[length(subset_2_2_value)])
+      })
+    }
+    
+  }
+  
+  subset_2_1_value <- input$subset_2_1
+  
+  
+  dat_cut_subset_2 <- dat
+  if ("whole"%in%subset_2_2_value){
+    dat_cut_subset_2 <- dat
+  } else {
+    dat_cut_subset_2 <- dat[which(dat[,paste("subset_2.",subset_2_1_value,sep="")] == subset_2_2_value[1]),]
+    if (length(subset_2_2_value)>1){
+      for (i in 2:length(subset_2_2_value)){
+        dat_cut_subset_2 <- rbind(dat_cut_subset_2,dat[which(dat[,paste("subset_2.",subset_2_1_value,sep="")] == subset_2_2_value[i]),])
+      }
+    }
+    dat_cut_subset_2[,x_axis_names] <- factor(dat_cut_subset_2[,x_axis_names],exclude=NULL)
+  }
+}
+########################
