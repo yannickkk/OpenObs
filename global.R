@@ -32,6 +32,8 @@ library(data.table)
 #dat_cut_subset_n-1 <- Data frame avant le tri en fonction du subset
 #x_axis_names <- contient le nom de la colonne utilisé en X pour le plot
 #subset_n_valid <- check si le subset exist ou pas (TRUE ou FALSE)
+#date_min <- contient l'année minimal
+#date_max <- contient l'année maximal
 
 #######################################
 
@@ -58,10 +60,11 @@ date_min <- min(substring(dat$subset_date.date,1,4))
 date_max <- max(substring(dat$subset_date.date,1,4))
 ############################
 
-#####Récupération de l'axe x pour la plot#####
-x_axis_names <- str_replace(colnames(dat)[grep("_x",names(dat))],"_x","")
-colnames(dat)[grep("_x",names(dat))] <- str_replace(colnames(dat)[grep("_x",names(dat))],"_x","")
-##############################################
+#####Récupération de l'axe x pour le plot#####
+
+source("scripts/axe_x.R")
+
+#############################################
 
 
 #####Check si le subset exist ou non######
