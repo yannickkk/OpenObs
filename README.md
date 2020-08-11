@@ -19,7 +19,8 @@ Elle se compose:
 
   d'un affichage d'informations sur les espèces contactées:
   
-  
+![image](https://user-images.githubusercontent.com/39738426/89902910-52205380-dbe7-11ea-95ab-e68cc8a1db76.png)
+
   d'un lien vers des documents externes d'information sur les espèces:
   
   de la présentation du protocole de collecte des données:
