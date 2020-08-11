@@ -30,14 +30,20 @@ library(data.table)
 #subset_n_value <- contient les valeurs sélectionnées
 #dat_cut_subset_n <- Data frame après tri en fonction du subset
 #dat_cut_subset_n-1 <- Data frame avant le tri en fonction du subset
+#x_axis_names <- contient le nom de la colonne utilisé en X pour le plot
+#subset_n_valid <- check si le subset exist ou pas (TRUE ou FALSE)
 
 #######################################
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
-#source("scripts/user_base.R")
-#source("scripts/access_drive.R")
+source("access/access_box.R")
 
-dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
+#dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
+
+names(dat) <- gsub("~",".",names(dat))
+
+colnames(dat)[grep("subset_date",names(dat))] <- "subset_date.date"
+#colnames(dat)[grep("loc_x_lb93",names(dat))] <- "loc_lb93" #A cocher pour le moment si bouquetin
 
 ########si des quantites manquent on les remplace par 1 car lespece est presente
 if ("quantity.quantite"%in% colnames(dat)){
@@ -46,20 +52,47 @@ if ("quantity.quantite"%in% colnames(dat)){
   dat$quantity.quantite <- 1
 }
 
-if (length(grep("subset_2",names(dat))) > 1){
-  subset_2 <- FALSE
-  subset_2_names <- names(dat[,grep("subset_2",names(dat))])
-} else {
-  subset_2 <- TRUE
-  for (i in names(dat)){
-    if (str_detect(i,"subset_2")){
-      subset_2_names <- i
-    }
+
+#####Récupération date######
+date_min <- min(substring(dat$subset_date.date,1,4))
+date_max <- max(substring(dat$subset_date.date,1,4))
+############################
+
+#####Récupération de l'axe x pour la plot#####
+x_axis_names <- str_replace(colnames(dat)[grep("_x",names(dat))],"_x","")
+colnames(dat)[grep("_x",names(dat))] <- str_replace(colnames(dat)[grep("_x",names(dat))],"_x","")
+##############################################
+
+
+#####Check si le subset exist ou non######
+for (i in (1:4)){
+  if (length(grep(paste0("subset_",i),names(dat))) > 0 ){
+    name <- paste0(paste0("subset_",i),"_valid")
+    assign(name,TRUE)
+  } else {
+    name <- paste0(paste0("subset_",i),"_valid") 
+    assign(name,FALSE)
   }
+}
+##########################################
+if (subset_1_valid){
+  source("scripts/subset_1_createVar.r")
+}
+
+if (subset_2_valid){
+  source("scripts/subset_2_createVar.r")
+}
+
+if (subset_3_valid){
+  source("scripts/subset_3_createVar.r")
+}
+
+if (subset_4_valid){
+  source("scripts/subset_4_createVar.r")
 }
 
 #####################################################################################################################COMMENTER POURQUOI ON FAIT CELA
-data_p <- dat
+
 
 ######CrC)ation de l'axe x marge des graphiques######
 m <- list(
