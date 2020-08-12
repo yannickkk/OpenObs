@@ -42,30 +42,38 @@ source("access/access_box.R")
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
-names(dat) <- gsub("~",".",names(dat))
 
-colnames(dat)[grep("subset_date",names(dat))] <- "subset_date.date"
-#colnames(dat)[grep("loc_x_lb93",names(dat))] <- "loc_lb93" #A cocher pour le moment si bouquetin
+#####Récupération préfixes et suffixes######
+prefixe <- lapply(str_split(names(dat),'~'),"[[",1)
+prefixes<-unlist(prefixe[grep("(^subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)])
+suffixes<-unlist(lapply(str_split(names(dat)[grep("(subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)],'~'),"[[",2))
+############################################
 
+#####Récupération axe x##########
+x_axis_names <- str_replace(paste0(prefixes[grep("_x",prefixes)],suffixes[grep("_x",prefixes)]),"_x","~")
+colnames(dat)[grep(prefixe[grep(prefixes[grep("_x",prefixes)],prefixe)],colnames(dat))] <- x_axis_names
+#################################
+
+#####Correction date#####
+colnames(dat)[grep("subset_date",names(dat))] <- "subset_date~date"
+print(unique(substring(dat$'subset_date~date',1,4)))
+if (length(which(dat$'subset_date~date'==""))>0){
+  dat <- dat[-which(dat$'subset_date~date' == ""),]
+}
+print(unique(substring(dat$'subset_date~date',1,4)))
+
+#########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
-if ("quantity.quantite"%in% colnames(dat)){
-  dat$quantity.quantite <- replace(dat$quantity.quantite,is.na(dat$quantity.quantite),1)
+if ("quantity~quantite"%in% colnames(dat)){
+  dat$'quantity~quantite' <- replace(dat$'quantity~quantite',is.na(dat$'quantity~quantite'),1)
 } else {
-  dat$quantity.quantite <- 1
+  dat[,'quantity~quantite'] <- 1
 }
 
-
 #####Récupération date######
-date_min <- min(substring(dat$subset_date.date,1,4))
-date_max <- max(substring(dat$subset_date.date,1,4))
+date_min <- min(substring(dat$'subset_date~date',1,4))
+date_max <- max(substring(dat$'subset_date~date',1,4))
 ############################
-
-#####Récupération de l'axe x pour le plot#####
-
-source("scripts/axe_x.R")
-
-#############################################
-
 
 #####Check si le subset exist ou non######
 for (i in (1:4)){
