@@ -26,11 +26,11 @@ if(subset_3){
   if ("whole"%in%subset_3_2_value & length(subset_3_2_value) > 1) {
     if(subset_3_2_value[1] == "whole") {
       observe({
-        updateSelectInput(session,"subset_3_2",label = paste('Select ',subset_3_1_value),choices = c("whole",levels(dat[,paste("subset_3.",subset_3_1_value,sep="")])),selected = subset_3_2_value[2])
+        updateSelectInput(session,"subset_3_2",label = paste('Select ',subset_3_1_value),choices = c("whole",levels(dat[,paste("subset_3~",subset_3_1_value,sep="")])),selected = subset_3_2_value[2])
       })
     } else {
       observe({
-        updateSelectInput(session,"subset_3_2",label = paste('Select ',subset_3_1_value),choices = c("whole",levels(dat[,paste("subset_3.",subset_3_1_value,sep="")])),selected = subset_3_2_value[length(subset_3_2_value)])
+        updateSelectInput(session,"subset_3_2",label = paste('Select ',subset_3_1_value),choices = c("whole",levels(dat[,paste("subset_3~",subset_3_1_value,sep="")])),selected = subset_3_2_value[length(subset_3_2_value)])
       })
     }
     
@@ -43,10 +43,10 @@ if(subset_3){
   if ("whole"%in%subset_3_2_value){
     dat_cut_subset_3 <- dat_cut_subset_2
   } else {
-    dat_cut_subset_3 <- dat_cut_subset_2[which(dat_cut_subset_2[,paste("subset_3.",subset_3_1_value,sep="")] == subset_3_2_value[1]),]
+    dat_cut_subset_3 <- dat_cut_subset_2[which(dat_cut_subset_2[,paste("subset_3~",subset_3_1_value,sep="")] == subset_3_2_value[1]),]
     if (length(subset_3_2_value)>1){
       for (i in 2:length(subset_3_2_value)){
-        dat_cut_subset_3 <- rbind(dat_cut_subset_3,dat_cut_subset_2[which(dat[,paste("subset_3.",subset_3_1_value,sep="")] == subset_3_2_value[i]),])
+        dat_cut_subset_3 <- rbind(dat_cut_subset_3,dat_cut_subset_2[which(dat[,paste("subset_3~",subset_3_1_value,sep="")] == subset_3_2_value[i]),])
       }
     }
     dat_cut_subset_3[,x_axis_names] <- factor(dat_cut_subset_3[,x_axis_names],exclude=NULL)

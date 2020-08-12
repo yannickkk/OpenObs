@@ -39,10 +39,9 @@ server <- function(input, output, session) {
     
     #####################
     dat_cut <- dat_cut_subset_4
-    print(summary(dat_cut))
     
-    annee_cut<-substring(dat_cut[,"subset_date.date"],1,4)
-    b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$quantity.quantite,annee_cut))
+    annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
+    b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$'quantity~quantite',annee_cut))
     b_an$Var2 <- as.numeric(b_an$Var2)
     b_an$freq <- as.numeric(b_an$Freq)
     b_an$Freq <- b_an$Var2*b_an$Freq
@@ -56,7 +55,7 @@ server <- function(input, output, session) {
     #####Checking checkbox#####
     if (input$checkbox) {
       
-      jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date.date"]),1,4))
+      jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),1,4))
       for (i in names(jours_visite_annee)) {
         b_an[which(as.character(b_an[,"annee"]) == i), "Freq"] <- round(b_an[which(as.character(b_an[,"annee"]) == i), "Freq"]/jours_visite_annee[i],2)
       }

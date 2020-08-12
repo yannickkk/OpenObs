@@ -26,11 +26,11 @@ if(subset_1){
   if ("whole"%in%subset_1_2_value & length(subset_1_2_value) > 1) {
     if(subset_1_2_value[1] == "whole") {
       observe({
-        updateSelectInput(session,"subset_1_2",label = paste('Select ',subset_1_1_value),choices = c("whole",levels(dat[,paste("subset_1.",subset_1_1_value,sep="")])),selected = subset_1_2_value[2])
+        updateSelectInput(session,"subset_1_2",label = paste('Select ',subset_1_1_value),choices = c("whole",levels(dat[,paste("subset_1~",subset_1_1_value,sep="")])),selected = subset_1_2_value[2])
       })
     } else {
       observe({
-        updateSelectInput(session,"subset_1_2",label = paste('Select ',subset_1_1_value),choices = c("whole",levels(dat[,paste("subset_1.",subset_1_1_value,sep="")])),selected = subset_1_2_value[length(subset_1_2_value)])
+        updateSelectInput(session,"subset_1_2",label = paste('Select ',subset_1_1_value),choices = c("whole",levels(dat[,paste("subset_1~",subset_1_1_value,sep="")])),selected = subset_1_2_value[length(subset_1_2_value)])
       })
     }
     
@@ -43,10 +43,10 @@ if(subset_1){
   if ("whole"%in%subset_1_2_value){
     dat_cut_subset_1 <- dat
   } else {
-    dat_cut_subset_1 <- dat[which(dat[,paste("subset_1.",subset_1_1_value,sep="")] == subset_1_2_value[1]),]
+    dat_cut_subset_1 <- dat[which(dat[,paste("subset_1~",subset_1_1_value,sep="")] == subset_1_2_value[1]),]
     if (length(subset_1_2_value)>1){
       for (i in 2:length(subset_1_2_value)){
-        dat_cut_subset_1 <- rbind(dat_cut_subset_1,dat[which(dat[,paste("subset_1.",subset_1_1_value,sep="")] == subset_1_2_value[i]),])
+        dat_cut_subset_1 <- rbind(dat_cut_subset_1,dat[which(dat[,paste("subset_1~",subset_1_1_value,sep="")] == subset_1_2_value[i]),])
       }
     }
     dat_cut_subset_1[,x_axis_names] <- factor(dat_cut_subset_1[,x_axis_names],exclude=NULL)
