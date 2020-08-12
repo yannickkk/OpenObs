@@ -45,11 +45,13 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               width = 2),
                             mainPanel(
                               plotlyOutput("plotly", height = "600px"),
-                              width = 10
+                              width = 10)
                             ),
+                          DT::dataTableOutput("DT")
                           ),
-                 )
+                 tabPanel("Spatial viewer")
 )
+
                               
                               
                                                       

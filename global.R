@@ -56,11 +56,10 @@ colnames(dat)[grep(prefixe[grep(prefixes[grep("_x",prefixes)],prefixe)],colnames
 
 #####Correction date#####
 colnames(dat)[grep("subset_date",names(dat))] <- "subset_date~date"
-print(unique(substring(dat$'subset_date~date',1,4)))
-if (length(which(dat$'subset_date~date'==""))>0){
-  dat <- dat[-which(dat$'subset_date~date' == ""),]
+if (length(which(is.na(dat$'subset_date~date')))>0){
+  dat <- dat[-which(is.na(dat$'subset_date~date')),]
 }
-print(unique(substring(dat$'subset_date~date',1,4)))
+
 
 #########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
@@ -104,6 +103,7 @@ if (subset_4_valid){
 
 #####################################################################################################################COMMENTER POURQUOI ON FAIT CELA
 
+dat_DT <- dat
 
 ######CrC)ation de l'axe x marge des graphiques######
 m <- list(
