@@ -34,6 +34,11 @@ library(data.table)
 #subset_n_valid <- check si le subset exist ou pas (TRUE ou FALSE)
 #date_min <- contient l'année minimal
 #date_max <- contient l'année maximal
+#date_valid <- TRUE = YYYY/MM/DD  FALSE = DD/MM/YYYY
+
+#pie_n_valid <- TRUE or FALSE si le pie exist ou pas
+#pie_n_names <- Contient le nom des colonnes de pie_n
+#pie_n_value <- contient les valeurs sélectionnées
 
 #######################################
 
@@ -60,7 +65,6 @@ if (length(which(is.na(dat$'subset_date~date')))>0){
   dat <- dat[-which(is.na(dat$'subset_date~date')),]
 }
 
-
 #########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
 if ("quantity~quantite"%in% colnames(dat)){
@@ -70,8 +74,17 @@ if ("quantity~quantite"%in% colnames(dat)){
 }
 
 #####Récupération date######
-date_min <- min(substring(dat$'subset_date~date',1,4))
-date_max <- max(substring(dat$'subset_date~date',1,4))
+if (str_detect(unique(substring(dat$'subset_date~date',1,4))[1],"/")){
+  date_valid <- FALSE
+  date_min <- min(substring(dat$'subset_date~date',7,10))
+  date_max <- max(substring(dat$'subset_date~date',7,10))
+}else{
+  date_valid <- TRUE
+  date_min <- min(substring(dat$'subset_date~date',1,4))
+  date_max <- max(substring(dat$'subset_date~date',1,4))
+}
+
+
 ############################
 
 #####Check si le subset exist ou non######
@@ -85,6 +98,19 @@ for (i in (1:4)){
   }
 }
 ##########################################
+#####Check si le pie exist ou non######
+for (i in (1:4)){
+  if (length(grep(paste0("pie_",i),names(dat))) > 0 ){
+    name <- paste0(paste0("pie_",i),"_valid")
+    assign(name,TRUE)
+  } else {
+    name <- paste0(paste0("pie_",i),"_valid") 
+    assign(name,FALSE)
+  }
+}
+##########################################
+
+######Création des différentes variables en fonction des subsets utilisés###########################
 if (subset_1_valid){
   source("scripts/subset_1_createVar.r")
 }
@@ -101,11 +127,31 @@ if (subset_4_valid){
   source("scripts/subset_4_createVar.r")
 }
 
-#####################################################################################################################COMMENTER POURQUOI ON FAIT CELA
+###################################################
 
+######Création des différentes variables en fonction des pies utilisés###########################
+if (pie_1_valid){
+  pie_1_names <- names(dat[,grep("pie_1",tolower(names(dat)))])
+}
+
+if (pie_2_valid){
+  pie_2_names <- names(dat[,grep("pie_2",tolower(names(dat)))])
+}
+
+if (pie_3_valid){
+  pie_3_names <- names(dat[,grep("pie_3",tolower(names(dat)))])
+}
+
+if (pie_4_valid){
+  pie_4_names <- names(dat[,grep("pie_4",tolower(names(dat)))])
+}
+
+###################################################
+
+####Duplication du dat pour création dataTable#####
 dat_DT <- dat
 
-######CrC)ation de l'axe x marge des graphiques######
+######Création de l'axe x marge des graphiques#####
 m <- list(
   l = 50,
   r = 50,

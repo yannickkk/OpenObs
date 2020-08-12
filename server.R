@@ -1,10 +1,10 @@
 # Define server logic 
 server <- function(input, output, session) {
   
-  ######Mise en place de l'UI#######
+  ######Mise en place de l'UI onglet 1#######
   source("scripts/update_UI_subset.R", local= TRUE)
+  ##################################
   
-  #####################################
   
   ######Plotly#####
   output$plotly <- renderPlotly({
@@ -40,7 +40,11 @@ server <- function(input, output, session) {
     #####################
     dat_cut <- dat_cut_subset_4
     
-    annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
+    if (date_valid){
+      annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
+    } else {
+      annee_cut<-substring(dat_cut[,"subset_date~date"],7,10)
+    }
     b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$'quantity~quantite',annee_cut))
     b_an$Var2 <- as.numeric(b_an$Var2)
     b_an$freq <- as.numeric(b_an$Freq)
@@ -54,8 +58,11 @@ server <- function(input, output, session) {
     names(b_an) <- c('especes','annee','Freq')
     #####Checking checkbox#####
     if (input$checkbox) {
-      
-      jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),1,4))
+      if (date_valid){
+        jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),1,4))
+      } else {
+        jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),7,10))
+      }
       for (i in names(jours_visite_annee)) {
         b_an[which(as.character(b_an[,"annee"]) == i), "Freq"] <- round(b_an[which(as.character(b_an[,"annee"]) == i), "Freq"]/jours_visite_annee[i],2)
       }
@@ -149,7 +156,12 @@ server <- function(input, output, session) {
     
     dat_cut_DT <- dat_cut_subset_4_DT
     
-    annee_DT <- substring(dat_cut_DT[,"subset_date~date"],1,4)
+    if (date_valid){
+      annee_DT <- substring(dat_cut_DT[,"subset_date~date"],1,4)
+    } else {
+      annee_DT <- substring(dat_cut_DT[,"subset_date~date"],7,10)
+    }
+
     b_an_DT <- data.frame(table(dat_cut_DT[,x_axis_names],dat_cut_DT$'quantity~quantite',annee_DT))
     b_an_DT$Var2 <- as.numeric(b_an_DT$Var2)
     b_an_DT$freq <- as.numeric(b_an_DT$Freq)
@@ -166,7 +178,11 @@ server <- function(input, output, session) {
     #####Checking checkbox#####
     if (input$checkbox) {
       #####RC)cupC)ration frC)quence/visites######
-      jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),1,4))
+      if (date_valid){
+        jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),1,4))
+      } else {
+        jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),7,10))
+      }
       for (i in names(jours_visite_annee_DT)){
         b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"] <- round(b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"]/jours_visite_annee_DT[i],2)
       }
@@ -184,4 +200,9 @@ server <- function(input, output, session) {
     }
     ######################
   })
+  
+  ######Mise en place de l'UI onglet 2#######
+  source("scripts/update_UI_map_subset.R", local= TRUE)
+  source("scripts/update_UI_map_pie.R", local= TRUE)
+  ##################################
 }
