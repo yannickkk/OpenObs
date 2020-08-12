@@ -120,4 +120,68 @@ server <- function(input, output, session) {
     }
 
   })
+  
+  output$DT <- DT::renderDataTable({
+    
+    if(subset_1_valid){
+      source("scripts/subset_1_dataCreate_DT.R", local = TRUE)
+    } else {
+      dat_cut_subset_1_DT <- dat_DT
+    }
+    
+    if(subset_2_valid){
+      source("scripts/subset_2_dataCreate_DT.R", local = TRUE)
+    } else {
+      dat_cut_subset_2_DT <- dat_cut_subset_1_DT
+    }
+    
+    if(subset_3_valid){
+      source("scripts/subset_3_dataCreate_DT.R", local = TRUE)
+    } else {
+      dat_cut_subset_3_DT <- dat_cut_subset_2_DT
+    }
+    
+    if(subset_4_valid){
+      source("scripts/subset_4_dataCreate_DT.R", local = TRUE)
+    } else {
+      dat_cut_subset_4_DT <- dat_cut_subset_3_DT
+    }
+    
+    dat_cut_DT <- dat_cut_subset_4_DT
+    
+    annee_DT <- substring(dat_cut_DT[,"subset_date~date"],1,4)
+    b_an_DT <- data.frame(table(dat_cut_DT[,x_axis_names],dat_cut_DT$'quantity~quantite',annee_DT))
+    b_an_DT$Var2 <- as.numeric(b_an_DT$Var2)
+    b_an_DT$freq <- as.numeric(b_an_DT$Freq)
+    b_an_DT$Freq <- b_an_DT$Var2*b_an_DT$Freq
+    b_an_DT <- b_an_DT[,-2]
+    b_an_DT <- b_an_DT %>%
+      group_by(Var1,annee_DT) %>%
+      summarise(Freq = sum(Freq))
+    
+    b_an_DT <- data.frame(b_an_DT)
+    names(b_an_DT)<-c("especes","annee","Freq")
+          
+    ############################
+    #####Checking checkbox#####
+    if (input$checkbox) {
+      #####RC)cupC)ration frC)quence/visites######
+      jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),1,4))
+      for (i in names(jours_visite_annee_DT)){
+        b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"] <- round(b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"]/jours_visite_annee_DT[i],2)
+      }
+      ######################################
+      ######Création table#####
+      b_an_DT<-cast(b_an_DT,formula = especes~annee,value.var = "Freq")
+      DT::datatable(b_an_DT)
+      #######################
+    }
+    else{
+      ######CrC)ation table######
+      b_an_DT<-cast(b_an_DT,formula = especes~annee,value.var = "Freq")
+      DT::datatable(b_an_DT)
+      #######################
+    }
+    ######################
+  })
 }
