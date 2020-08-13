@@ -1,13 +1,17 @@
 # Define server logic 
 server <- function(input, output, session) {
   
+  
   ######Mise en place de l'UI onglet 1#######
   source("scripts/update_UI_subset.R", local= TRUE)
   ##################################
+
   
   
   ######Plotly#####
   output$plotly <- renderPlotly({
+    
+    
     
     if(subset_1_valid){
       source("scripts/subset_1_dataCreate.R", local = TRUE)
@@ -50,6 +54,11 @@ server <- function(input, output, session) {
     b_an$freq <- as.numeric(b_an$Freq)
     b_an$Freq <- b_an$Var2*b_an$Freq
     b_an <- b_an[,-2]
+    
+    shiny::validate(
+      need(length(b_an) != 2, "Loading..")
+    )
+    
     b_an <- b_an %>%
       group_by(Var1,annee_cut) %>%
       summarise(Freq = sum(Freq))
@@ -84,7 +93,7 @@ server <- function(input, output, session) {
         )
       }
       ####################
-      ####CrC)ation du graphique####
+      ####Création du graphique####
       py_b_an <- plot_ly(type = 'bar') %>%
         layout(yaxis = yaxis, margin = m,xaxis = xaxis, barmode = "stack")
       for (i in dates) {
@@ -201,8 +210,63 @@ server <- function(input, output, session) {
     ######################
   })
   
+  #####Spatial viewer######
+  
   ######Mise en place de l'UI onglet 2#######
   source("scripts/update_UI_map_subset.R", local= TRUE)
   source("scripts/update_UI_map_pie.R", local= TRUE)
   ##################################
+  
+  #output$map <- renderLeaflet({
+    
+    #if(subset_1_valid){
+    #  source("scripts/map_subset_1_dataCreate.R", local = TRUE)
+    #} else {
+    #  map_dat_cut_subset_1 <- dat
+    #}
+    #
+    #if(subset_2_valid){
+    #  source("scripts/map_subset_2_dataCreate.R", local = TRUE)
+    #} else {
+    #  map_dat_cut_subset_2 <- map_dat_cut_subset_1
+    #}
+    #
+    #if(subset_3_valid){
+    #  source("scripts/map_subset_3_dataCreate.R", local = TRUE)
+    #} else {
+    #  map_dat_cut_subset_3 <- map_dat_cut_subset_2
+    #}
+    #
+    #if(subset_4_valid){
+    #  source("scripts/map_subset_4_dataCreate.R", local = TRUE)
+    #} else {
+    #  map_dat_cut_subset_4 <- map_dat_cut_subset_3
+    #}
+    #
+    #####Checking date#####
+    #source("scripts/checking_date.R", local = TRUE)
+    # 
+    #if (date_valid){
+    #  map_dat_cut <- map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],1,4) == dates[i]),]
+    #} else {
+    #  map_dat_cut <- map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],7,10) == dates[i]),]
+    #}
+    #
+    #if (length(dates) > 1 ){
+    #  for (i in 2:length(dates)){
+    #    if (date_valid){
+    #      map_dat_cut <- rbind(map_dat_cut,map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],1,4)== dates[i]),])
+    #    } else {
+    #      map_dat_cut <- rbind(map_dat_cut,map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],7,10)== dates[i]),])
+    #    }
+    #  }
+    #}
+    #map_dat_cut$'subset_date~date' <- factor(map_dat_cut$'subset_date~date',exclude = NULL)
+    
+    ############################################
+    #####Checking pie#####
+    
+    
+    
+ 
 }

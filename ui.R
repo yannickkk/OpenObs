@@ -6,16 +6,23 @@ logo <-"esi.gif"
 
 logo_lien <- "https://www.facebook.com/esicongo"
 
+
+
 ######### Titre des onglets #################
 
 titre_onglet1 <- "Vue des données"
 titre_onglet2 <- "Spatial viewer"
 
 ######### Label subset ##############
-source("scripts/creation_label_subsets.R")
+label1_select_2 <- "subset_1" #Change to label name wanted
+label2_select_2 <- "subset_2" #Change to label name wanted
+label3_select_2 <- "subset_3" #Change to label name wanted
+label4_select_2 <- "subset_4" #Change to label name wanted
+
+source("scripts/creation_label_subsets.R", local = TRUE)
 #############################################
 ######### Label pie ##############
-source("scripts/creation_label_pies.R")
+source("scripts/creation_label_pies.R", local = TRUE)
 #############################################
 
 ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, style="margin-top: -15px",height ="50" ,width ="179" ), href=logo_lien, target ="_blank")),
@@ -29,6 +36,9 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               selectInput("subset_1_2",label = label1_select_3,choices = paste("whole",dat[,subset_1_names[1]]),multiple = TRUE,selected ="whole"),
                               ##################
                               #####subset_2#####
+                              #source("scripts/test.R", local = TRUE),
+                              #source("scripts/test_2.R",local = TRUE),
+                              #source("scripts/test_3.R",local = TRUE),
                               selectInput("subset_2",label= paste("Select",label2_select_1),choices = c("whole",levels(dat[,subset_2_names])),selected = "whole",multiple=TRUE),
                               selectInput("subset_2_1",label = label2_select_2,choices = c(substring(subset_2_names,10))),
                               selectInput("subset_2_2",label = label2_select_3,choices = paste("whole",dat[,subset_2_names[1]]),multiple = TRUE,selected ="whole"),
@@ -49,6 +59,7 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               width = 2),
                             mainPanel(
                               plotlyOutput("plotly", height = "600px"),
+                              h6("missing data for occurences have been deleted"),
                               width = 10)
                             ),
                           DT::dataTableOutput("DT")
@@ -92,7 +103,6 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                           )
                  )
 )
-
                               
                               
                                                       

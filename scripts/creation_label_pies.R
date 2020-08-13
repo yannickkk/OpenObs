@@ -1,6 +1,6 @@
 ####pie_1#####
 if (pie_1_valid){
-  label1_pie_1<- "test"
+  label1_pie_1<- "Select"
 } else {
   label1_pie_1 <- "1" 
   pie_1_names <- 1
@@ -9,7 +9,7 @@ if (pie_1_valid){
 
 ####pie_2#####
 if (pie_2_valid){
-  label1_pie_2<- "test"
+  label1_pie_2<- "Select"
 } else {
   label1_pie_2 <- "1" 
   pie_2_names <- 1
@@ -18,7 +18,7 @@ if (pie_2_valid){
 
 ####pie_3#####
 if (pie_3_valid){
-  label1_pie_3<- "test"
+  label1_pie_3<- "Select"
 } else {
   label1_pie_3 <- "1" 
   pie_3_names <- 1
@@ -27,7 +27,7 @@ if (pie_3_valid){
 
 ####pie_4#####
 if (pie_4_valid){
-  label1_pie_4<- "test"
+  label1_pie_4<- "Select"
 } else {
   label1_pie_4 <- "1" 
   pie_4_names <- 1

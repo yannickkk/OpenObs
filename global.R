@@ -47,7 +47,6 @@ source("access/access_box.R")
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
-
 #####Récupération préfixes et suffixes######
 prefixe <- lapply(str_split(names(dat),'~'),"[[",1)
 prefixes<-unlist(prefixe[grep("(^subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)])
@@ -65,6 +64,7 @@ if (length(which(is.na(dat$'subset_date~date')))>0){
   dat <- dat[-which(is.na(dat$'subset_date~date')),]
 }
 
+
 #########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
 if ("quantity~quantite"%in% colnames(dat)){
@@ -72,6 +72,7 @@ if ("quantity~quantite"%in% colnames(dat)){
 } else {
   dat[,'quantity~quantite'] <- 1
 }
+
 
 #####Récupération date######
 if (str_detect(unique(substring(dat$'subset_date~date',1,4))[1],"/")){
@@ -109,6 +110,16 @@ for (i in (1:4)){
   }
 }
 ##########################################
+
+
+########### Passe tous les subset en facteur pour lire les valeurs numériques######
+for (i in names(dat)){
+  if (str_detect(i,"subset_")){
+    dat[,i] <- factor(dat[,i])
+    levels(dat[,i]) <- tolower(levels(dat[,i]))
+  }
+}
+#######################################"
 
 ######Création des différentes variables en fonction des subsets utilisés###########################
 if (subset_1_valid){
@@ -165,5 +176,4 @@ xaxis <- list(
   cex.axis =0.5,
   cex.lab = 0.5
 )
-
 ########################################################
