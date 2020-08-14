@@ -21,6 +21,8 @@ library(leafsync)
 library(sodium)
 library(rdrop2)
 library(data.table)
+library(lubridate)
+library(magrittr)
 
 
 ####Explication des variables#########
@@ -177,3 +179,9 @@ xaxis <- list(
   cex.lab = 0.5
 )
 ########################################################
+
+########################################################
+#####sauvegarde du jeu de données complet
+datt<-dat
+#####réduction du jeu de données à 1 ligne de façon à générer l'UI dynamique rapidement quelque soit la taille du jeu de données
+dat<-dat[1,]

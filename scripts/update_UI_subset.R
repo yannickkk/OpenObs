@@ -72,7 +72,7 @@ if(subset_4_valid) {
   if (!subset_4){
     observe({
       subset_4_1_value <- input$subset_4_1
-      updateSelectInput(session,"subset_4_2",label = paste('Select ',subset_4_1_value),choices = c("whole",levels(dat[,paste("subset_4~",subset_4_1_value,sep="")])),selected ="whole")
+      updateSelectInput(session,"subset_4_2",label = paste('Select ',subset_4_1_value),choices = c("whole",levels(dat[,paste("subset_4~",subset_4_1_value,sep="")])),selected = "whole")
       removeUI(".shiny-input-container:has(#subset_4)",immediate = TRUE)
     })
   } else {
@@ -88,3 +88,4 @@ if(subset_4_valid) {
 }
 
 #####################
+dat<-datt
