@@ -5,12 +5,13 @@ server <- function(input, output, session) {
   ######Mise en place de l'UI onglet 1#######
   source("scripts/update_UI_subset.R", local= TRUE)
   ##################################
-
+  
+  ######resetButton#####
+  source("scripts/reset_input_button.R",local=TRUE)
   
   
   ######Plotly#####
   output$plotly <- renderPlotly({
-    
     
     
     if(subset_1_valid){
@@ -37,23 +38,34 @@ server <- function(input, output, session) {
       dat_cut_subset_4 <- dat_cut_subset_3
     }
     
+    
+    dat_cut_date <- dat_cut_subset_4
     #####Checking date#####
     source("scripts/checking_date.R", local = TRUE)
-    ######################
+    #####################
     
     #####################
-    dat_cut <- dat_cut_subset_4
+    dat_cut <- dat_cut_date
+    
+    #####################
+    
+    
+    
+    source("scripts/Update_UI_2_subset.R", local = TRUE)
+    
     
     if (date_valid){
       annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
     } else {
       annee_cut<-substring(dat_cut[,"subset_date~date"],7,10)
     }
+    
     b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$'quantity~quantite',annee_cut))
     b_an$Var2 <- as.numeric(b_an$Var2)
     b_an$freq <- as.numeric(b_an$Freq)
     b_an$Freq <- b_an$Var2*b_an$Freq
     b_an <- b_an[,-2]
+    
     
     shiny::validate(
       need(length(b_an) != 2, "Loading..")
