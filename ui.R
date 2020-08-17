@@ -24,6 +24,9 @@ source("scripts/creation_label_subsets.R", local = TRUE)
 ######### Label pie ##############
 source("scripts/creation_label_pies.R", local = TRUE)
 #############################################
+######### Label geo ##############
+label1_geo_1 <- "Select"
+label1_geo_2 <- "Select"
 
 ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, style="margin-top: -15px",height ="50" ,width ="179" ), href=logo_lien, target ="_blank")),
                  tabPanel(titre_onglet1,
@@ -92,6 +95,10 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               selectInput("map_pie_3",label=label1_pie_3,choices = c(substring(pie_3_names,7))),
                               selectInput("map_pie_4",label=label1_pie_4,choices = c(substring(pie_4_names,7))),
                               ###################
+                              #####Geo###########
+                              selectInput("map_geo_1",label=label1_geo_1,choices = c(substring(geo_1_names,7))),
+                              selectInput("map_geo_2",label=label1_geo_2,choices = c(substring(geo_2_names,7))),
+                              ####################
                               dateRangeInput("map_dates", label = "Date range", start = paste0(date_min,"-01-01"), end = paste0(date_max,"-12-31"),min = paste0(date_min,"-01-01"),max =paste0(date_max,"-12-31"),format='yyyy',startview = "decade"),
                               width = 2
                             ),

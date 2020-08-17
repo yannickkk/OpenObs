@@ -144,22 +144,43 @@ if (subset_4_valid){
 
 ######Création des différentes variables en fonction des pies utilisés###########################
 if (pie_1_valid){
-  pie_1_names <- names(dat[,grep("pie_1",tolower(names(dat)))])
+  pie_1_names <- names(dat[,grep("^pie_1",tolower(names(dat)))])
 }
 
 if (pie_2_valid){
-  pie_2_names <- names(dat[,grep("pie_2",tolower(names(dat)))])
+  pie_2_names <- names(dat[,grep("^pie_2",tolower(names(dat)))])
 }
 
 if (pie_3_valid){
-  pie_3_names <- names(dat[,grep("pie_3",tolower(names(dat)))])
+  pie_3_names <- names(dat[,grep("^pie_3",tolower(names(dat)))])
 }
 
 if (pie_4_valid){
-  pie_4_names <- names(dat[,grep("pie_4",tolower(names(dat)))])
+  pie_4_names <- names(dat[,grep("^pie_4",tolower(names(dat)))])
 }
 
 ###################################################
+
+######Checking geo_1#####
+if(length(grep("^geo_1",names(dat))) != 0){
+  geo_1_valid <- TRUE
+  geo_1_names <- names(dat[,grep("^geo_1",tolower(names(dat)))])
+  geo_2_names <- names(dat[,grep("^geo_2",tolower(names(dat)))])
+} else {
+  geo_1_valid <- FALSE
+  geo_2_names <- names(dat[,grep("^geo_2",tolower(names(dat)))])
+  geo_1_names <- "2"
+}
+
+########################
+
+########Checking géo_2###########
+if (length(grep("^geo_2_lat", names(dat))) != 0){
+  dat[,grep("^geo_2_lat", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_lat", names(dat))]))
+  dat[,grep("^geo_2_long", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_long", names(dat))]))
+  geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
+  
+}
 
 ####Duplication du dat pour création dataTable#####
 dat_DT <- dat

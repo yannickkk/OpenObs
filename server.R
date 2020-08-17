@@ -8,6 +8,7 @@ server <- function(input, output, session) {
   
   ######resetButton#####
   source("scripts/reset_input_button.R",local=TRUE)
+
   
   
   ######Plotly#####
@@ -175,7 +176,12 @@ server <- function(input, output, session) {
       dat_cut_subset_4_DT <- dat_cut_subset_3_DT
     }
     
-    dat_cut_DT <- dat_cut_subset_4_DT
+    
+    #####Checking date#######
+    dat_cut_date_DT <- dat_cut_subset_4_DT
+    source("scripts/checking_date_DT.R", local = TRUE)
+    dat_cut_DT <- dat_cut_date_DT
+    ########################
     
     if (date_valid){
       annee_DT <- substring(dat_cut_DT[,"subset_date~date"],1,4)
@@ -227,58 +233,75 @@ server <- function(input, output, session) {
   ######Mise en place de l'UI onglet 2#######
   source("scripts/update_UI_map_subset.R", local= TRUE)
   source("scripts/update_UI_map_pie.R", local= TRUE)
+  source("scripts/update_UI_map_geo.R", local = TRUE)
   ##################################
   
-  #output$map <- renderLeaflet({
+  output$map <- renderLeaflet({
     
-    #if(subset_1_valid){
-    #  source("scripts/map_subset_1_dataCreate.R", local = TRUE)
-    #} else {
-    #  map_dat_cut_subset_1 <- dat
-    #}
-    #
-    #if(subset_2_valid){
-    #  source("scripts/map_subset_2_dataCreate.R", local = TRUE)
-    #} else {
-    #  map_dat_cut_subset_2 <- map_dat_cut_subset_1
-    #}
-    #
-    #if(subset_3_valid){
-    #  source("scripts/map_subset_3_dataCreate.R", local = TRUE)
-    #} else {
-    #  map_dat_cut_subset_3 <- map_dat_cut_subset_2
-    #}
-    #
-    #if(subset_4_valid){
-    #  source("scripts/map_subset_4_dataCreate.R", local = TRUE)
-    #} else {
-    #  map_dat_cut_subset_4 <- map_dat_cut_subset_3
-    #}
-    #
+    if(subset_1_valid){
+      source("scripts/map_subset_1_dataCreate.R", local = TRUE)
+    } else {
+      map_dat_cut_subset_1 <- dat
+    }
+    
+    if(subset_2_valid){
+      source("scripts/map_subset_2_dataCreate.R", local = TRUE)
+    } else {
+      map_dat_cut_subset_2 <- map_dat_cut_subset_1
+    }
+    
+    if(subset_3_valid){
+      source("scripts/map_subset_3_dataCreate.R", local = TRUE)
+    } else {
+      map_dat_cut_subset_3 <- map_dat_cut_subset_2
+    }
+    
+    if(subset_4_valid){
+      source("scripts/map_subset_4_dataCreate.R", local = TRUE)
+    } else {
+      map_dat_cut_subset_4 <- map_dat_cut_subset_3
+    }
+    
     #####Checking date#####
-    #source("scripts/checking_date.R", local = TRUE)
-    # 
-    #if (date_valid){
-    #  map_dat_cut <- map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],1,4) == dates[i]),]
-    #} else {
-    #  map_dat_cut <- map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],7,10) == dates[i]),]
-    #}
-    #
-    #if (length(dates) > 1 ){
-    #  for (i in 2:length(dates)){
-    #    if (date_valid){
-    #      map_dat_cut <- rbind(map_dat_cut,map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],1,4)== dates[i]),])
-    #    } else {
-    #      map_dat_cut <- rbind(map_dat_cut,map_dat_cut_subset_4[which(substring(map_dat_cut_subset_4[,"subset_date~date"],7,10)== dates[i]),])
-    #    }
-    #  }
-    #}
-    #map_dat_cut$'subset_date~date' <- factor(map_dat_cut$'subset_date~date',exclude = NULL)
+    map_dat_cut_date <- map_dat_cut_subset_4
+    source("scripts/map_checking_date.R", local = TRUE)
+    #######################
+    map_dat_cut <- map_dat_cut_date
+  
+    source("scripts/Update_UI_2_map_subset.R", local = TRUE)
     
     ############################################
+    
+    
+    #####Récupération coordonnée#######
+    cent<-aggregate(dat[,c(grep("^geo_2_lat", names(dat)), grep("^geo_2_long", names(dat)))], list(dat[,grep("^geo_2~", names(dat))]), mean)
+    names(cent) <- c("name","lat","lng")
+    map_center_lng <- mean(cent[,"lng"])
+    map_center_lat <- mean(cent[,"lat"])
+    ###################################
     #####Checking pie#####
     
     
+    if(pie_1_valid){
+      source("scripts/map_pie_1_datacreate.r", local=TRUE)
+    }
     
- 
+    
+    pal <- colorNumeric(c("red","green","blue"),1:length(levels(map_df_pie_1$pie_1)))
+    tilesURL <- "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+    
+    prot_geo <- leaflet() %>%
+      addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
+      setView(lng = map_center_lng, lat = map_center_lat,zoom = 8) %>%
+      addLegend("topright", title = map_pie_1_value, labels = levels(map_df_pie_1$pie_1),opacity = 0.7,colors = pal(1:length(levels(map_df_pie_1$pie_1))))
+    
+    
+    ####Création map pie_1#####
+    if(pie_1_valid){
+      source("scripts/map_pie_1_creation.r",local= TRUE)
+    }
+    
+    prot_geo
+    
+  })
 }
