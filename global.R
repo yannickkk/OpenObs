@@ -49,6 +49,7 @@ source("access/access_box.R")
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
+names(dat) <- tolower(names(dat))
 #####Récupération préfixes et suffixes######
 prefixe <- lapply(str_split(names(dat),'~'),"[[",1)
 prefixes<-unlist(prefixe[grep("(^subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)])
@@ -66,7 +67,6 @@ if (length(which(is.na(dat$'subset_date~date')))>0){
   dat <- dat[-which(is.na(dat$'subset_date~date')),]
 }
 
-names(dat) <- tolower(names(dat))
 #########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
 if ("quantity~quantite"%in% colnames(dat)){

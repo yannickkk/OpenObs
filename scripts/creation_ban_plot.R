@@ -5,11 +5,13 @@ if (date_valid){
   annee_cut<-substring(dat_cut[,"subset_date~date"],7,10)
 }
 
+
 b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$'quantity~quantite',annee_cut))
 b_an$Var2 <- as.numeric(b_an$Var2)
 b_an$freq <- as.numeric(b_an$Freq)
 b_an$Freq <- b_an$Var2*b_an$Freq
 b_an <- b_an[,-2]
+
 
 
 shiny::validate(
