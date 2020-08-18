@@ -109,11 +109,7 @@ server <- function(input, output, session) {
     #####Checking checkbox#####
     if (input$checkbox) {
       #####RC)cupC)ration frC)quence/visites######
-      if (date_valid){
-        jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),1,4))
-      } else {
-        jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),7,10))
-      }
+      jours_visite_annee_DT<-table(substring(unique(dat_DT[,"subset_date~date"]),1,4))
       for (i in names(jours_visite_annee_DT)){
         b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"] <- round(b_an_DT[which(as.character(b_an_DT[,"annee"]) == i), "Freq"]/jours_visite_annee_DT[i],2)
       }
@@ -171,6 +167,7 @@ server <- function(input, output, session) {
     source("scripts/map_checking_date.R", local = TRUE)
     #######################
     map_dat_cut <- map_dat_cut_date
+    
   
     source("scripts/Update_UI_2_map_subset.R", local = TRUE)
     
@@ -190,6 +187,7 @@ server <- function(input, output, session) {
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
     
     ###################################
+    
     
     #####Checking pie#####
     if(pie_1_valid){

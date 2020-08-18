@@ -72,7 +72,7 @@ if(subset_4_valid) {
   if (!subset_4){
     observe({
       map_subset_4_1_value <- input$map_subset_4_1
-      updateSelectInput(session,"map_subset_1_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(dat[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected ="whole")
+      updateSelectInput(session,"map_subset_4_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(dat[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected ="whole")
       removeUI(".shiny-input-container:has(#map_subset_4)",immediate = TRUE)
     })
   } else {

@@ -1,9 +1,5 @@
 
-if (date_valid){
-  annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
-} else {
-  annee_cut<-substring(dat_cut[,"subset_date~date"],7,10)
-}
+annee_cut<-substring(dat_cut[,"subset_date~date"],1,4)
 
 
 b_an <- data.frame(table(tolower(dat_cut[,x_axis_names]),dat_cut$'quantity~quantite',annee_cut))

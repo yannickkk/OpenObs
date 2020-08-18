@@ -34,7 +34,7 @@ if(subset_2_valid){
     map_dat_cut[,subset_2_names] <- factor(map_dat_cut[,subset_2_names])
     if("whole"%in%map_subset_2_value & length(map_subset_2_value) > 1) {
       observe({
-        updateSelectInput(session,"subset_2",label = label2_select_1, choices = c("whole",levels(map_dat_cut[,subset_2_names])),selected = map_subset_2_value[2])
+        updateSelectInput(session,"map_subset_2",label = label2_select_1, choices = c("whole",levels(map_dat_cut[,subset_2_names])),selected = map_subset_2_value[2])
       })
     }
   } else {
@@ -45,11 +45,11 @@ if(subset_2_valid){
     if ("whole"%in%map_subset_2_2_value & length(map_subset_2_2_value) > 1) {
       if(map_subset_2_2_value[1] == "whole") {
         observe({
-          updateSelectInput(session,"subset_2_2",label = paste('Select ',map_subset_2_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_2~",map_subset_2_1_value,sep="")])),selected = map_subset_2_2_value[2])
+          updateSelectInput(session,"map_subset_2_2",label = paste('Select ',map_subset_2_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_2~",map_subset_2_1_value,sep="")])),selected = map_subset_2_2_value[2])
         })
       } else {
         observe({
-          updateSelectInput(session,"subset_2_2",label = paste('Select ',map_subset_2_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_2~",map_subset_2_1_value,sep="")])),selected = map_subset_2_2_value[length(map_subset_2_2_value)])
+          updateSelectInput(session,"map_subset_2_2",label = paste('Select ',map_subset_2_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_2~",map_subset_2_1_value,sep="")])),selected = map_subset_2_2_value[length(map_subset_2_2_value)])
         })
       }
     }
@@ -63,7 +63,7 @@ if(subset_3_valid){
     map_dat_cut[,subset_3_names] <- factor(map_dat_cut[,subset_3_names])
     if("whole"%in%map_subset_3_value & length(map_subset_3_value) > 1) {
       observe({
-        updateSelectInput(session,"subset_3",label = label3_select_1, choices = c("whole",levels(map_dat_cut[,subset_3_names])),selected = map_subset_3_value[2])
+        updateSelectInput(session,"map_subset_3",label = label3_select_1, choices = c("whole",levels(map_dat_cut[,subset_3_names])),selected = map_subset_3_value[2])
       })
     }
   } else {
@@ -74,11 +74,11 @@ if(subset_3_valid){
     if ("whole"%in%map_subset_3_2_value & length(map_subset_3_2_value) > 1) {
       if(map_subset_3_2_value[1] == "whole") {
         observe({
-          updateSelectInput(session,"subset_3_2",label = paste('Select ',map_subset_3_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_3~",map_subset_3_1_value,sep="")])),selected = map_subset_3_2_value[2])
+          updateSelectInput(session,"map_subset_3_2",label = paste('Select ',map_subset_3_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_3~",map_subset_3_1_value,sep="")])),selected = map_subset_3_2_value[2])
         })
       } else {
         observe({
-          updateSelectInput(session,"subset_3_2",label = paste('Select ',map_subset_3_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_3~",map_subset_3_1_value,sep="")])),selected = map_subset_3_2_value[length(map_subset_3_2_value)])
+          updateSelectInput(session,"map_subset_3_2",label = paste('Select ',map_subset_3_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_3~",map_subset_3_1_value,sep="")])),selected = map_subset_3_2_value[length(map_subset_3_2_value)])
         })
       }
     } 
@@ -92,7 +92,7 @@ if(subset_4_valid){
     map_dat_cut[,subset_4_names] <- factor(map_dat_cut[,subset_4_names])
     if("whole"%in%map_subset_4_value & length(map_subset_4_value) > 1) {
       observe({
-        updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(map_dat_cut[,subset_4_names])),selected = map_subset_4_value[2])
+        updateSelectInput(session,"map_subset_4",label = label4_select_1, choices = c("whole",levels(map_dat_cut[,subset_4_names])),selected = map_subset_4_value[2])
       })
     }
   } else {
@@ -103,11 +103,11 @@ if(subset_4_valid){
     if ("whole"%in%map_subset_4_2_value & length(map_subset_4_2_value) > 1) {
       if(map_subset_4_2_value[1] == "whole") {
         observe({
-          updateSelectInput(session,"subset_4_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected = map_subset_4_2_value[2])
+          updateSelectInput(session,"map_subset_4_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected = map_subset_4_2_value[2])
         })
       } else {
         observe({
-          updateSelectInput(session,"subset_4_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected = map_subset_4_2_value[length(map_subset_4_2_value)])
+          updateSelectInput(session,"map_subset_4_2",label = paste('Select ',map_subset_4_1_value),choices = c("whole",levels(map_dat_cut[,paste("subset_4~",map_subset_4_1_value,sep="")])),selected = map_subset_4_2_value[length(map_subset_4_2_value)])
         })
       }
     } 

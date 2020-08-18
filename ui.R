@@ -70,17 +70,17 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                             sidebarPanel(
                               ############subset###############
                               #####subset_1#####
-                              selectInput("map_subset_1",label= paste("Select",label1_select_1),choices = c("whole",levels(dat[,subset_1_names])),selected = "whole",multiple=TRUE),
+                              selectInput("map_subset_1",label= label1_select_1,choices = c("whole",levels(dat[,subset_1_names])),selected = "whole",multiple=TRUE),
                               selectInput("map_subset_1_1",label = label1_select_2,choices = c(substring(subset_1_names,10))),
                               selectInput("map_subset_1_2",label = label1_select_3,choices = paste("whole",dat[,subset_1_names[1]]),multiple = TRUE,selected ="whole"),
                               ##################
                               #####subset_2#####
-                              selectInput("map_subset_2",label= paste("Select",label2_select_1),choices = c("whole",levels(dat[,subset_2_names])),selected = "whole",multiple=TRUE),
+                              selectInput("map_subset_2",label= label2_select_1,choices = c("whole",levels(dat[,subset_2_names])),selected = "whole",multiple=TRUE),
                               selectInput("map_subset_2_1",label = label2_select_2,choices = c(substring(subset_2_names,10))),
                               selectInput("map_subset_2_2",label = label2_select_3,choices = paste("whole",dat[,subset_2_names[1]]),multiple = TRUE,selected ="whole"),
                               ###################
                               #####subset_3#####
-                              selectInput("map_subset_3",label= paste("Select",label3_select_1),choices = c("whole",levels(dat[,subset_3_names])),selected = "whole",multiple=TRUE),
+                              selectInput("map_subset_3",label= label3_select_1,choices = c("whole",levels(dat[,subset_3_names])),selected = "whole",multiple=TRUE),
                               selectInput("map_subset_3_1",label = label3_select_2,choices = c(substring(subset_3_names,10))),
                               selectInput("map_subset_3_2",label = label3_select_3,choices = paste("whole",dat[,subset_3_names[1]]),multiple = TRUE,selected ="whole"),
                               ###################
