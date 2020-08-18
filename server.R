@@ -41,6 +41,7 @@ server <- function(input, output, session) {
     
     
     dat_cut_date <- dat_cut_subset_4
+    
     #####Checking date#####
     source("scripts/checking_date.R", local = TRUE)
     #####################
@@ -182,11 +183,14 @@ server <- function(input, output, session) {
     
     
     #####Récupération coordonnée#######
-    cent<-aggregate(dat[,c(grep("^geo_2_lat", names(dat)), grep("^geo_2_long", names(dat)))], list(dat[,grep("^geo_2~", names(dat))]), mean)
+    cent<-aggregate(map_dat_cut[,c(grep("^geo_2_lat", names(map_dat_cut)), grep("^geo_2_long", names(map_dat_cut)))], list(map_dat_cut[,grep("^geo_2~", names(map_dat_cut))]), mean)
     names(cent) <- c("name","lat","lng")
     map_center_lng <- mean(cent[,"lng"])
     map_center_lat <- mean(cent[,"lat"])
+    map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
+    
     ###################################
+    
     #####Checking pie#####
     if(pie_1_valid){
       source("scripts/map_pie_1_datacreate.r", local=TRUE)

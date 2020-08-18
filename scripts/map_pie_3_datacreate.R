@@ -6,7 +6,7 @@ for (i in pie_3_names){
   }
 }
 
-names(map_df_pie_3) <- c("geo_2",map_pie_3_value,"Freq")
+names(map_df_pie_3) <- c("geo_2",pie_3,"Freq")
 
 map_df_pie_3$lng <- NA
 map_df_pie_3$lat <- NA
