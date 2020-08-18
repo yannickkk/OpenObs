@@ -78,15 +78,10 @@ if ("quantity~quantite"%in% colnames(dat)){
 
 #####Récupération date######
 if (str_detect(unique(substring(dat$'subset_date~date',1,4))[1],"/")){
-  date_valid <- FALSE
-  date_min <- min(substring(dat$'subset_date~date',7,10))
-  date_max <- max(substring(dat$'subset_date~date',7,10))
-}else{
-  date_valid <- TRUE
-  date_min <- min(substring(dat$'subset_date~date',1,4))
-  date_max <- max(substring(dat$'subset_date~date',1,4))
+  dat[,"subset_date~date"] <- dmy(dat[,"subset_date~date"])
 }
-
+date_min <- min(substring(dat$'subset_date~date',1,4))
+date_max <- max(substring(dat$'subset_date~date',1,4))
 
 ############################
 
@@ -144,19 +139,35 @@ if (subset_4_valid){
 
 ######Création des différentes variables en fonction des pies utilisés###########################
 if (pie_1_valid){
-  pie_1_names <- names(dat[,grep("^pie_1",tolower(names(dat)))])
+  if (length(grep("^pie_1",names(dat))) > 1){
+    pie_1_names <- names(dat[,grep("^pie_1",tolower(names(dat)))])
+  } else {
+    pie_1_names <- names(dat)[grep("^pie_1", tolower(names(dat)))]
+  }
 }
 
 if (pie_2_valid){
-  pie_2_names <- names(dat[,grep("^pie_2",tolower(names(dat)))])
+  if (length(grep("^pie_2",names(dat))) > 1){
+    pie_2_names <- names(dat[,grep("^pie_2",tolower(names(dat)))])
+  } else {
+    pie_2_names <- names(dat)[grep("^pie_2", tolower(names(dat)))]
+  }
 }
 
 if (pie_3_valid){
-  pie_3_names <- names(dat[,grep("^pie_3",tolower(names(dat)))])
+  if (length(grep("^pie_3",names(dat))) > 1){
+    pie_3_names <- names(dat[,grep("^pie_3",tolower(names(dat)))])
+  } else {
+    pie_3_names <- names(dat)[grep("^pie_3", tolower(names(dat)))]
+  }
 }
 
 if (pie_4_valid){
-  pie_4_names <- names(dat[,grep("^pie_4",tolower(names(dat)))])
+  if (length(grep("^pie_4",names(dat))) > 1){
+    pie_4_names <- names(dat[,grep("^pie_4",tolower(names(dat)))])
+  } else {
+    pie_4_names <- names(dat)[grep("^pie_4", tolower(names(dat)))]
+  }
 }
 
 ###################################################
@@ -202,7 +213,6 @@ xaxis <- list(
   cex.lab = 0.5
 )
 ########################################################
-
 ########################################################
 #####sauvegarde du jeu de données complet
 datt<-dat
