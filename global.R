@@ -40,7 +40,7 @@ library(magrittr)
 
 #pie_n_valid <- TRUE or FALSE si le pie exist ou pas
 #pie_n_names <- Contient le nom des colonnes de pie_n
-#pie_n_value <- contient les valeurs sélectionnées
+#map_pie_n_value <- contient les valeurs sélectionnées
 
 #######################################
 
@@ -66,7 +66,7 @@ if (length(which(is.na(dat$'subset_date~date')))>0){
   dat <- dat[-which(is.na(dat$'subset_date~date')),]
 }
 
-
+names(dat) <- tolower(names(dat))
 #########################
 ########si des quantites manquent on les remplace par 1 car lespece est presente
 if ("quantity~quantite"%in% colnames(dat)){
@@ -164,23 +164,25 @@ if (pie_4_valid){
 ######Checking geo_1#####
 if(length(grep("^geo_1",names(dat))) != 0){
   geo_1_valid <- TRUE
-  geo_1_names <- names(dat[,grep("^geo_1",tolower(names(dat)))])
-  geo_2_names <- names(dat[,grep("^geo_2",tolower(names(dat)))])
+  if (length(grep("^geo_1",names(dat))) > 1){
+    geo_1_names <- names(dat[,grep("^geo_1",tolower(names(dat)))])
+  } else {
+    geo_1_names <- names(dat)[grep("^geo_1~", tolower(names(dat)))]
+  }
 } else {
   geo_1_valid <- FALSE
-  geo_2_names <- names(dat[,grep("^geo_2",tolower(names(dat)))])
   geo_1_names <- "2"
 }
 
 ########################
 
-########Checking géo_2###########
+########Checking geo_2###########
 if (length(grep("^geo_2_lat", names(dat))) != 0){
   dat[,grep("^geo_2_lat", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_lat", names(dat))]))
   dat[,grep("^geo_2_long", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_long", names(dat))]))
-  geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
-  
 }
+geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
+################################
 
 ####Duplication du dat pour création dataTable#####
 dat_DT <- dat
