@@ -1,3 +1,6 @@
+pal_1 <- colorNumeric(c("red","green","blue"),1:length(levels(map_df_pie_1$pie_1)))
+prot_geo <- addLegend(map = prot_geo,"topleft", title = map_pie_1_value, labels = levels(map_df_pie_1$pie_1),opacity = 0.7,colors = pal_1(1:length(levels(map_df_pie_1$pie_1))))
+
 for(i in name_map_df_pie_1){
   d <- get(i)
   Freq <- d %>% select(Freq)

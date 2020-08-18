@@ -25,8 +25,8 @@ source("scripts/creation_label_subsets.R", local = TRUE)
 source("scripts/creation_label_pies.R", local = TRUE)
 #############################################
 ######### Label geo ##############
-label1_geo_1 <- "Select"
-label1_geo_2 <- "Select"
+label1_geo_1 <- "Select geo_1"
+label1_geo_2 <- "Select geo_2"
 
 ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, style="margin-top: -15px",height ="50" ,width ="179" ), href=logo_lien, target ="_blank")),
                  tabPanel(titre_onglet1,
