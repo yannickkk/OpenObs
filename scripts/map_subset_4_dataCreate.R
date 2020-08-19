@@ -17,7 +17,7 @@ if(subset_4){
 } else {
   #####Multiple#####
   map_subset_4_2_value <- input$map_subset_4_2
-  map_subset_4_1_value <- input$subset_4_1
+  map_subset_4_1_value <- input$map_subset_4_1
   
   
   map_dat_cut_subset_4 <- map_dat_cut_subset_3

@@ -48,6 +48,13 @@ library(RColorBrewer)
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
+#couche_1 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_1_parcellaire_2020.geojson", what = "sp")
+#couche_2 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_2_enclos.geojson", what = "sp")
+#couche_3 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_3_base_de_vie.geojson", what = "sp")
+#couche_4 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_4_cabanes.geojson", what = "sp")
+
+
+
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
 names(dat) <- tolower(names(dat))
@@ -212,6 +219,10 @@ if (length(grep("^geo_2_lat", names(dat))) != 0){
 }
 geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 ################################
+
+#####Checking couche######
+
+
 
 ####Duplication du dat pour création dataTable#####
 dat_DT <- dat

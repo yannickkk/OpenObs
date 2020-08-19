@@ -1,4 +1,4 @@
-pal_1 <- brewer.pal(n = length(levels(map_df_pie_1$pie_1)), name = "Set1")
+pal_1 <- brewer.pal(n = length(levels(map_df_pie_1$pie_1)), name = "Purples")
 prot_geo <- addLegend(map = prot_geo,"topleft", title = map_pie_1_value, labels = levels(map_df_pie_1$pie_1),opacity = 0.7,colors = pal_1)
 
 
