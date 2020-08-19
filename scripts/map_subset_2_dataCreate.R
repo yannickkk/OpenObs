@@ -17,7 +17,7 @@ if(subset_2){
 } else {
   #####Multiple#####
   map_subset_2_2_value <- input$map_subset_2_2
-  map_subset_2_1_value <- input$subset_2_1
+  map_subset_2_1_value <- input$map_subset_2_1
   
   map_dat_cut_subset_2 <- map_dat_cut_subset_1
   if ("whole"%in%map_subset_2_2_value){

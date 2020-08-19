@@ -149,6 +149,8 @@ server <- function(input, output, session) {
       map_dat_cut_subset_1 <- dat
     }
     
+    
+    
     if(subset_2_valid){
       source("scripts/map_subset_2_dataCreate.R", local = TRUE)
     } else {
@@ -173,8 +175,9 @@ server <- function(input, output, session) {
     #######################
     map_dat_cut <- map_dat_cut_date
     
-  
+    
     source("scripts/Update_UI_2_map_subset.R", local = TRUE)
+    
     
     ############################################
     #######Checking geo_1/geo_2######
@@ -188,7 +191,6 @@ server <- function(input, output, session) {
     map_center_lng <- mean(cent[,"lng"], na.rm = TRUE)
     map_center_lat <- mean(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
-    
     ###################################
     
     #####Checking pie#####
@@ -213,7 +215,23 @@ server <- function(input, output, session) {
     
     prot_geo <- leaflet() %>%
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
-      setView(lng = map_center_lng, lat = map_center_lat,zoom = 12)
+      setView(lng = map_center_lng, lat = map_center_lat,zoom = 15)
+    
+    # if(exists("couche_1")){
+    #   prot_geo <- addPolygons(prot_geo,data=couche_1,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+    # }
+    # 
+    # if(exists("couche_2")){
+    #   prot_geo <- addPolygons(prot_geo,data=couche_2,stroke=TRUE,smoothFactor = 0.6,fill=TRUE,color = "grey",dashArray="3",weight = 3.95,fillOpacity = 0)
+    # }
+    # 
+    # if(exists("couche_3")){
+    #   prot_geo <- addPolygons(prot_geo,data=couche_3,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+    # }
+    # 
+    # if(exists("couche_4")){
+    #   prot_geo <- addPolygons(prot_geo,data=couche_4,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+    # }
     
     ####Création map pie_1#####
     if(pie_1_valid){
