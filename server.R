@@ -138,6 +138,11 @@ server <- function(input, output, session) {
   
   output$map <- renderLeaflet({
     
+    
+    shiny::validate(
+      need(cent_valid == TRUE,"Pas de colonne geo_2_long~longitude et geo_2_lat~latitude ou pas de fichier geojson")
+    )
+    
     if(subset_1_valid){
       source("scripts/map_subset_1_dataCreate.R", local = TRUE)
     } else {
@@ -172,22 +177,19 @@ server <- function(input, output, session) {
     source("scripts/Update_UI_2_map_subset.R", local = TRUE)
     
     ############################################
-    #######Checking geo_1######
-    
+    #######Checking geo_1/geo_2######
     source("scripts/map_geo_1_dataCreate.R", local = TRUE)
+    #################################
     
-    ###########################
     
-    
-    #####Récupération coordonnée#######
+    #####Récupération coordonnées#######
     cent<-aggregate(map_dat_cut[,c(grep("^geo_2_lat", names(map_dat_cut)), grep("^geo_2_long", names(map_dat_cut)))], list(map_dat_cut[,grep("^geo_2~", names(map_dat_cut))]), mean)
     names(cent) <- c("name","lat","lng")
-    map_center_lng <- mean(cent[,"lng"])
-    map_center_lat <- mean(cent[,"lat"])
+    map_center_lng <- mean(cent[,"lng"], na.rm = TRUE)
+    map_center_lat <- mean(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
     
     ###################################
-    
     
     #####Checking pie#####
     if(pie_1_valid){
@@ -206,11 +208,12 @@ server <- function(input, output, session) {
       source("scripts/map_pie_4_datacreate.r", local=TRUE)
     }
     
+    
     tilesURL <- "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
     
     prot_geo <- leaflet() %>%
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
-      setView(lng = map_center_lng, lat = map_center_lat,zoom = 8)
+      setView(lng = map_center_lng, lat = map_center_lat,zoom = 12)
     
     ####Création map pie_1#####
     if(pie_1_valid){
