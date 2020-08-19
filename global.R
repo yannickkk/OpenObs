@@ -61,7 +61,7 @@ x_axis_names <- str_replace(paste0(prefixes[grep("_x",prefixes)],suffixes[grep("
 colnames(dat)[grep(prefixe[grep(prefixes[grep("_x",prefixes)],prefixe)],colnames(dat))] <- x_axis_names
 #################################
 
-#####Correction date#####
+#####Correction nom colonne date#####
 colnames(dat)[grep("subset_date",names(dat))] <- "subset_date~date"
 if (length(which(is.na(dat$'subset_date~date')))>0){
   dat <- dat[-which(is.na(dat$'subset_date~date')),]
@@ -76,7 +76,7 @@ if ("quantity~quantite"%in% colnames(dat)){
 }
 
 
-#####Récupération date######
+#####Changement format date et récupération date min et max ######
 if (str_detect(unique(substring(dat$'subset_date~date',1,4))[1],"/")){
   dat[,"subset_date~date"] <- dmy(dat[,"subset_date~date"])
 }
@@ -85,7 +85,7 @@ date_max <- max(substring(dat$'subset_date~date',1,4))
 
 ############################
 
-#####Check si le subset exist ou non######
+#####Check si le subset existe ou non######
 for (i in (1:4)){
   if (length(grep(paste0("subset_",i),names(dat))) > 0 ){
     name <- paste0(paste0("subset_",i),"_valid")
@@ -96,7 +96,7 @@ for (i in (1:4)){
   }
 }
 ##########################################
-#####Check si le pie exist ou non######
+#####Check si le pie existe ou non######
 for (i in (1:4)){
   if (length(grep(paste0("pie_",i),names(dat))) > 0 ){
     name <- paste0(paste0("pie_",i),"_valid")
@@ -187,10 +187,27 @@ if(length(grep("^geo_1",names(dat))) != 0){
 
 ########################
 
+
 ########Checking geo_2###########
 if (length(grep("^geo_2_lat", names(dat))) != 0){
   dat[,grep("^geo_2_lat", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_lat", names(dat))]))
   dat[,grep("^geo_2_long", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_long", names(dat))]))
+  cent_valid <- TRUE
+} else {
+  if (exists('cent_dist_geo')){
+    dat$`geo_2_long~longitude` <- NA
+    dat$`geo_2_lat~latitude` <- NA
+    for(i in unique(dat[,grep("^geo_2~", names(dat))])){
+      if(length(which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i) != 0)){
+        dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_long~longitude"] <- rep(coordinates(cent_dist_geo[which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i),])[,"coords.x1"],length(dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_long~longitude"]))
+        dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_lat~latitude"] <- rep(coordinates(cent_dist_geo[which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i),])[,"coords.x2"],length(dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_lat~latitude"]))
+      }
+    }
+    cent_valid <- TRUE
+  } else {
+    cent_valid <- FALSE
+  }
+  
 }
 geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 ################################
@@ -213,6 +230,7 @@ xaxis <- list(
   cex.lab = 0.5
 )
 ########################################################
+
 ########################################################
 #####sauvegarde du jeu de données complet
 datt<-dat
