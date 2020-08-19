@@ -23,6 +23,7 @@ library(rdrop2)
 library(data.table)
 library(lubridate)
 library(magrittr)
+library(RColorBrewer)
 
 
 ####Explication des variables#########
