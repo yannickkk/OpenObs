@@ -54,6 +54,13 @@ source("access/access_box.R")
 #couche_4 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_4_cabanes.geojson", what = "sp")
 
 
+######Test cent_dist_geo
+# cent_dist_geo<-geojsonio::geojson_read("access/centroides_tirage.geojson", what = "sp",  stringsAsFactors = TRUE)
+# wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+# cent_dist_geo <- spTransform(cent_dist_geo,wgs84)
+# cent_dist_geo <- as.data.frame(cent_dist_geo)
+# names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
+# dat <- dat[,-c(4,5)]
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
@@ -64,9 +71,12 @@ prefixes<-unlist(prefixe[grep("(^subset_date)|(subset_1)|(subset_2)|(subset_3)|(
 suffixes<-unlist(lapply(str_split(names(dat)[grep("(subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)],'~'),"[[",2))
 ############################################
 
+###########################################
 #####Récupération axe x##########
+
 x_axis_names <- str_replace(paste0(prefixes[grep("_x",prefixes)],suffixes[grep("_x",prefixes)]),"_x","~")
 colnames(dat)[grep(prefixe[grep(prefixes[grep("_x",prefixes)],prefixe)],colnames(dat))] <- x_axis_names
+geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
 
 #####Correction nom colonne date#####
@@ -195,33 +205,39 @@ if(length(grep("^geo_1",names(dat))) != 0){
 
 ########################
 
-
-########Checking geo_2###########
+##############Checking geo_2#########
 if (length(grep("^geo_2_lat", names(dat))) != 0){
   dat[,grep("^geo_2_lat", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_lat", names(dat))]))
   dat[,grep("^geo_2_long", names(dat))]<-as.numeric(gsub(",", ".",dat[,grep("^geo_2_long", names(dat))]))
   cent_valid <- TRUE
 } else {
   if (exists('cent_dist_geo')){
+    if (length(names(cent_dist_geo)[grep("geo_2_x",names(cent_dist_geo))]) != 0){
+      geo_2_json <- names(cent_dist_geo)[grep("geo_2_x",names(cent_dist_geo))]
+    } else {
+      geo_2_json <- geo_2_names
+    }
     dat$`geo_2_long~longitude` <- NA
     dat$`geo_2_lat~latitude` <- NA
-    for(i in unique(dat[,grep("^geo_2~", names(dat))])){
-      if(length(which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i) != 0)){
-        dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_long~longitude"] <- rep(coordinates(cent_dist_geo[which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i),])[,"coords.x1"],length(dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_long~longitude"]))
-        dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_lat~latitude"] <- rep(coordinates(cent_dist_geo[which(cent_dist_geo[,"ADM2_FR"]$ADM2_FR == i),])[,"coords.x2"],length(dat[which(dat[,grep("^geo_2~",names(dat))]==i),"geo_2_lat~latitude"]))
+    for(i in levels(dat[,geo_1_names])){
+      for (j in levels(dat[,geo_2_names])){
+        for (k in 1:nrow(cent_dist_geo)) {
+          if(i == as.character(cent_dist_geo[k,grep("^geo_1",names(cent_dist_geo))])) {
+            if (j == as.character(cent_dist_geo[k,geo_2_json])) {
+              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
+              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
+            }
+          }
+        }
       }
     }
     cent_valid <- TRUE
   } else {
     cent_valid <- FALSE
   }
-  
 }
-geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
-################################
-
+#####################################
 #####Checking couche######
-
 
 
 ####Duplication du dat pour création dataTable#####
