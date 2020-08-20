@@ -8,6 +8,12 @@ server <- function(input, output, session) {
   
   ######resetButton#####
   source("scripts/reset_input_button.R",local=TRUE)
+  
+  ######Mise en place de l'UI onglet 2#######
+  source("scripts/update_UI_map_subset.R", local= TRUE)
+  source("scripts/update_UI_map_pie.R", local= TRUE)
+  source("scripts/update_UI_map_geo.R", local = TRUE)
+  ##################################
 
   
   
@@ -129,12 +135,6 @@ server <- function(input, output, session) {
   })
   
   #####Spatial viewer######
-  
-  ######Mise en place de l'UI onglet 2#######
-  source("scripts/update_UI_map_subset.R", local= TRUE)
-  source("scripts/update_UI_map_pie.R", local= TRUE)
-  source("scripts/update_UI_map_geo.R", local = TRUE)
-  ##################################
   
   output$map <- renderLeaflet({
     
