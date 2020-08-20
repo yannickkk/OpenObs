@@ -4,3 +4,5 @@ if(geo_1_valid){
 } else {
   removeUI(".shiny-input-container:has(#map_geo_1)",immediate = TRUE)
 }
+
+dat<-datt
