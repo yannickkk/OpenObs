@@ -64,7 +64,13 @@ source("access/access_box.R")
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
+col_pie<-grep("pie", names(dat))
+dat[,col_pie]<-apply(dat[,col_pie],2,as.character)
+dat[,col_pie][is.na(dat[,col_pie])]<- "non recherché"
+dat[,col_pie]<-apply(dat[,col_pie],2,as.factor)
+
 names(dat) <- tolower(names(dat))
+
 #####Récupération préfixes et suffixes######
 prefixe <- lapply(str_split(names(dat),'~'),"[[",1)
 prefixes<-unlist(prefixe[grep("(^subset_date)|(subset_1)|(subset_2)|(subset_3)|(subset_4)|(geo_1)|(geo_2)|(link)|(pie_1)|(pie_2)|(pie_3)|(pie_4)|(quantity)", prefixe, fixed = FALSE)])
@@ -78,6 +84,16 @@ x_axis_names <- str_replace(paste0(prefixes[grep("_x",prefixes)],suffixes[grep("
 colnames(dat)[grep(prefixe[grep(prefixes[grep("_x",prefixes)],prefixe)],colnames(dat))] <- x_axis_names
 geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
+
+#####Récupération wikisp et link#########
+if (length(names(dat)[grep("_wikisp",names(dat))]) != 0){
+  wikisp_names <- names(dat)[grep("wiki_sp",names(dat))]
+} else {
+  wikisp_names <- x_axis_names
+}
+
+link_names <- names(dat)[grep("^link",names(dat))]
+#########################################
 
 #####Correction nom colonne date#####
 colnames(dat)[grep("subset_date",names(dat))] <- "subset_date~date"

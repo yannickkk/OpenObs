@@ -138,6 +138,30 @@ server <- function(input, output, session) {
   
   output$map <- renderLeaflet({
     
+    if(!input$map_pie_1_button){
+      pie_1_valid = FALSE
+    } else {
+      pie_1_valid = TRUE
+    }
+    
+    if(!input$map_pie_2_button){
+      pie_2_valid = FALSE
+    } else {
+      pie_2_valid = TRUE
+    }
+    
+    if(!input$map_pie_3_button){
+      pie_3_valid = FALSE
+    } else {
+      pie_3_valid = TRUE
+    }
+    
+    if(!input$map_pie_4_button){
+      pie_4_valid = FALSE
+    } else {
+      pie_4_valid = TRUE
+    }
+    
     
     if(subset_1_valid){
       source("scripts/map_subset_1_dataCreate.R", local = TRUE)
@@ -253,5 +277,25 @@ server <- function(input, output, session) {
     
     prot_geo
     
+  })
+  
+  ######iFrame######
+  
+  observeEvent(input$species,{
+    if (input$species == ""){
+      output$frame <- renderUI({
+        tags$iframe(src="https://species.wikimedia.org/wiki",height = 1200, width = 1600, frameborder = "no")
+      })
+    } else {
+      name <- as.character(input$species)
+      link <<- paste0("https://species.wikimedia.org/wiki",name)
+      output$frame <- renderUI({
+        tags$iframe(src=link,height = 1200,width = 1600,frameborder = "no")
+      })
+      url <- a(tags$h3("More informations about this species"), href = as.character(unique(dat[which(dat[,wikisp_names] == name),link_names])),target = "_blank")
+      output$`More informations` <- renderUI({
+        tagList(url)
+      })
+    }
   })
 }
