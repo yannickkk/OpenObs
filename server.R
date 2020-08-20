@@ -139,10 +139,6 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     
     
-    shiny::validate(
-      need(cent_valid == TRUE,"Pas de colonne geo_2_long~longitude et geo_2_lat~latitude ou pas de fichier geojson")
-    )
-    
     if(subset_1_valid){
       source("scripts/map_subset_1_dataCreate.R", local = TRUE)
     } else {
@@ -185,7 +181,12 @@ server <- function(input, output, session) {
     #################################
     
     
+    shiny::validate(
+      need(cent_valid == TRUE,"Pas de colonne geo_2_long~longitude et geo_2_lat~latitude ou pas de fichier geojson")
+    )
+    
     #####Récupération coordonnées#######
+    
     cent<-aggregate(map_dat_cut[,c(grep("^geo_2_lat", names(map_dat_cut)), grep("^geo_2_long", names(map_dat_cut)))], list(map_dat_cut[,grep("^geo_2~", names(map_dat_cut))]), mean)
     names(cent) <- c("name","lat","lng")
     map_center_lng <- mean(cent[,"lng"], na.rm = TRUE)
@@ -217,21 +218,21 @@ server <- function(input, output, session) {
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
       setView(lng = map_center_lng, lat = map_center_lat,zoom = 15)
     
-    # if(exists("couche_1")){
-    #   prot_geo <- addPolygons(prot_geo,data=couche_1,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
-    # }
-    # 
-    # if(exists("couche_2")){
-    #   prot_geo <- addPolygons(prot_geo,data=couche_2,stroke=TRUE,smoothFactor = 0.6,fill=TRUE,color = "grey",dashArray="3",weight = 3.95,fillOpacity = 0)
-    # }
-    # 
-    # if(exists("couche_3")){
-    #   prot_geo <- addPolygons(prot_geo,data=couche_3,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
-    # }
-    # 
-    # if(exists("couche_4")){
-    #   prot_geo <- addPolygons(prot_geo,data=couche_4,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
-    # }
+     if(exists("couche_1")){
+       prot_geo <- addPolygons(prot_geo,data=couche_1,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+     }
+     
+     if(exists("couche_2")){
+       prot_geo <- addPolygons(prot_geo,data=couche_2,stroke=TRUE,smoothFactor = 0.6,fill=TRUE,color = "grey",dashArray="3",weight = 3.95,fillOpacity = 0)
+     }
+     
+     if(exists("couche_3")){
+       prot_geo <- addPolygons(prot_geo,data=couche_3,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+     }
+     
+     if(exists("couche_4")){
+       prot_geo <- addPolygons(prot_geo,data=couche_4,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+     }
     
     ####Création map pie_1#####
     if(pie_1_valid){
