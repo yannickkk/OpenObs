@@ -12,6 +12,7 @@ logo_lien <- "https://www.facebook.com/esicongo"
 
 titre_onglet1 <- "Vue des données"
 titre_onglet2 <- "Spatial viewer"
+titre_onglet3 <- "Species information"
 
 ######### Label subset ##############
 label1_select_2 <- "subset_1" #Change to label name wanted
@@ -91,9 +92,13 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               ###################
                               #####Pie###########
                               selectInput("map_pie_1",label=label1_pie_1,choices = c(substring(pie_1_names,7))),
+                              checkboxInput("map_pie_1_button", label ="Display pie_1", value = FALSE),
                               selectInput("map_pie_2",label=label1_pie_2,choices = c(substring(pie_2_names,7))),
+                              checkboxInput("map_pie_2_button", label ="Display pie_2", value = FALSE),
                               selectInput("map_pie_3",label=label1_pie_3,choices = c(substring(pie_3_names,7))),
+                              checkboxInput("map_pie_3_button", label ="Display pie_3", value = FALSE),
                               selectInput("map_pie_4",label=label1_pie_4,choices = c(substring(pie_4_names,7))),
+                              checkboxInput("map_pie_4_button", label ="Display pie_4", value = FALSE),
                               ###################
                               #####Geo###########
                               selectInput("map_geo_1",label=label1_geo_1,choices = c(substring(geo_1_names,7))),
@@ -105,7 +110,19 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                                       width = 10
                                       )
                           )
-                 )
+                      ),
+                 tabPanel(titre_onglet3,
+                          sidebarLayout(
+                            sidebarPanel(
+                              selectInput("species",label = "Species", choices = c("", levels(dat[,wikisp_names])), selected = ""),
+                              htmlOutput("More informations"),
+                              width = 2
+                              ),
+                            mainPanel(
+                              htmlOutput("frame")
+                            )
+                          )
+                        )
 )
                               
                               
