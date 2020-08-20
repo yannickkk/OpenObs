@@ -215,6 +215,10 @@ server <- function(input, output, session) {
     names(cent) <- c("name","lat","lng")
     map_center_lng <- mean(cent[,"lng"], na.rm = TRUE)
     map_center_lat <- mean(cent[,"lat"], na.rm = TRUE)
+    max_lng <- max(cent[,"lng"], na.rm = TRUE)
+    min_lng <- min(cent[,"lng"], na.rm = TRUE)
+    max_lat <- max(cent[,"lat"], na.rm = TRUE)
+    min_lat <- min(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
     ###################################
     
@@ -240,7 +244,7 @@ server <- function(input, output, session) {
     
     prot_geo <- leaflet() %>%
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
-      setView(lng = map_center_lng, lat = map_center_lat,zoom = 15)
+      fitBounds(max_lng,max_lat,min_lng,min_lat)
     
      if(exists("couche_1")){
        prot_geo <- addPolygons(prot_geo,data=couche_1,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
