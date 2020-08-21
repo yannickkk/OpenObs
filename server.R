@@ -247,19 +247,19 @@ server <- function(input, output, session) {
       fitBounds(max_lng,max_lat,min_lng,min_lat)
     
      if(exists("couche_1")){
-       prot_geo <- addPolygons(prot_geo,data=couche_1,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+       prot_geo <- addPolygons(prot_geo,data=couche_1, stroke = TRUE, weight = 1,color = ~"green", smoothFactor = 0.6)
      }
      
      if(exists("couche_2")){
-       prot_geo <- addPolygons(prot_geo,data=couche_2,stroke=TRUE,smoothFactor = 0.6,fill=TRUE,color = "grey",dashArray="3",weight = 3.95,fillOpacity = 0)
+       prot_geo <- addPolygons(prot_geo,data=couche_2, stroke = TRUE, weight = 1, color = ~"red", smoothFactor = 0.6)
      }
      
      if(exists("couche_3")){
-       prot_geo <- addPolygons(prot_geo,data=couche_3,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+       prot_geo <- addPolygons(prot_geo,data=couche_3, stroke = TRUE, weight = 1, color = ~"blue", smoothFactor = 0.6)
      }
      
      if(exists("couche_4")){
-       prot_geo <- addPolygons(prot_geo,data=couche_4,stroke=TRUE,smoothFactor = 0.6,fill=TRUE)
+       prot_geo <- addPolygons(prot_geo,data=couche_4, stroke = TRUE, weight = 1, color = ~"yellow", smoothFactor = 0.6)
      }
     
     ####Création map pie_1#####

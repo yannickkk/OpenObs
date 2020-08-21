@@ -48,10 +48,15 @@ library(RColorBrewer)
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
-#couche_1 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_1_parcellaire_2020.geojson", what = "sp")
-#couche_2 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_2_enclos.geojson", what = "sp")
-#couche_3 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_3_base_de_vie.geojson", what = "sp")
-#couche_4 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_4_cabanes.geojson", what = "sp")
+couche_1 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_1_parcellaire_2020.geojson", what = "sp")
+couche_2 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_2_enclos.geojson", what = "sp")
+couche_3 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_3_base_de_vie.geojson", what = "sp")
+couche_4 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_4_cabanes.geojson", what = "sp")
+wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+couche_1 <- spTransform(couche_1,wgs84)
+couche_2 <- spTransform(couche_2,wgs84)
+couche_3 <- spTransform(couche_3,wgs84)
+couche_4 <- spTransform(couche_4,wgs84)
 
 
 ######Test cent_dist_geo
