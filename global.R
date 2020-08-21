@@ -23,35 +23,72 @@ library(rdrop2)
 library(data.table)
 library(lubridate)
 library(magrittr)
-library(RColorBrewer)
 
 
-####Explication des variables#########
 
-#subset_n <- TRUE or FALSE si multiple ou simple
-#subset_n_names <- contient le nom des colonnes de subset
-#subset_n_value <- contient les valeurs sélectionnées
-#dat_cut_subset_n <- Data frame après tri en fonction du subset
-#dat_cut_subset_n-1 <- Data frame avant le tri en fonction du subset
-#x_axis_names <- contient le nom de la colonne utilisé en X pour le plot
-#subset_n_valid <- check si le subset exist ou pas (TRUE ou FALSE)
-#date_min <- contient l'année minimal
-#date_max <- contient l'année maximal
-#date_valid <- TRUE = YYYY/MM/DD  FALSE = DD/MM/YYYY
+###########Options des différents couches additionnelles#################
+#####Couche 1#####
+map_stroke_couche_1 <- TRUE
+map_weight_couche_1 <- 1
+map_fill_couche_1 <- TRUE
+map_smoothFactor_couche_1 <- 1
+map_color_couche_1 <- "green"
+map_fillOpacity_couche_1 <- 0
+##################
+#####Couche 2#####
+map_stroke_couche_2 <- TRUE
+map_weight_couche_2 <- 1
+map_fill_couche_2 <- TRUE
+map_smoothFactor_couche_2 <- 1
+map_color_couche_2 <- "red"
+map_fillOpacity_couche_2 <- 0
+##################
+#####Couche 3#####
+map_stroke_couche_3 <- TRUE
+map_weight_couche_3 <- 1
+map_fill_couche_3 <- TRUE
+map_smoothFactor_couche_3 <- 1
+map_color_couche_3 <- "blue"
+map_fillOpacity_couche_3 <- 0
+##################
+#####Couche 4#####
+map_stroke_couche_4 <- TRUE
+map_weight_couche_4 <- 1
+map_fill_couche_4 <- TRUE
+map_smoothFactor_couche_4 <- 1
+map_color_couche_4 <- "yellow"
+map_fillOpacity_couche_4 <- 0
+##################
 
-#pie_n_valid <- TRUE or FALSE si le pie exist ou pas
-#pie_n_names <- Contient le nom des colonnes de pie_n
-#map_pie_n_value <- contient les valeurs sélectionnées
+#####Options des différents pie chart#####
+map_pie_1_width <- 70
+map_pie_2_width <- 70
+map_pie_3_width <- 70
+map_pie_4_width <- 70
 
-#######################################
+##########################################
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
-#couche_1 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_1_parcellaire_2020.geojson", what = "sp")
-#couche_2 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_2_enclos.geojson", what = "sp")
-#couche_3 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_3_base_de_vie.geojson", what = "sp")
-#couche_4 <- geojsonio::geojson_read("access/YC_tiques_individu/couche_4_cabanes.geojson", what = "sp")
+
+if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
+  couche_1 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]), what = "sp")
+} 
+if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]))){
+  couche_2 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]), what = "sp")
+} 
+if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]))){
+  couche_3 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]), what = "sp")
+} 
+if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]))){
+  couche_4 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]), what = "sp")
+} 
+wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+couche_1 <- spTransform(couche_1,wgs84)
+couche_2 <- spTransform(couche_2,wgs84)
+couche_3 <- spTransform(couche_3,wgs84)
+couche_4 <- spTransform(couche_4,wgs84)
 
 
 ######Test cent_dist_geo
@@ -253,7 +290,6 @@ if (length(grep("^geo_2_lat", names(dat))) != 0){
   }
 }
 #####################################
-#####Checking couche######
 
 
 ####Duplication du dat pour création dataTable#####

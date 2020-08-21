@@ -104,6 +104,7 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               selectInput("map_geo_1",label=label1_geo_1,choices = c(substring(geo_1_names,7))),
                               ####################
                               dateRangeInput("map_dates", label = "Date range", start = paste0(date_min,"-01-01"), end = paste0(date_max,"-12-31"),min = paste0(date_min,"-01-01"),max =paste0(date_max,"-12-31"),format='yyyy',startview = "decade"),
+                              actionButton("map_reset_input","Reset Inputs"),
                               width = 2
                             ),
                             mainPanel(leafletOutput("map",height = 850),
