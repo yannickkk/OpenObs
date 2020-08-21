@@ -61,10 +61,10 @@ map_fillOpacity_couche_4 <- 0
 ##################
 
 #####Options des différents pie chart#####
-map_pie_1_width <- 30
-map_pie_2_width <- 30
-map_pie_3_width <- 30
-map_pie_4_width <- 30
+map_pie_1_width <- 70
+map_pie_2_width <- 70
+map_pie_3_width <- 70
+map_pie_4_width <- 70
 
 ##########################################
 

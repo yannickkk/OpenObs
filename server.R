@@ -16,6 +16,10 @@ server <- function(input, output, session) {
   source("scripts/update_UI_map_pie.R", local= TRUE)
   source("scripts/update_UI_map_geo.R", local = TRUE)
   ###########################################
+  #######ResetButton#####
+  source("scripts/map_reset_input_button.R",local=TRUE)
+  ########################
+  
 
   
   
