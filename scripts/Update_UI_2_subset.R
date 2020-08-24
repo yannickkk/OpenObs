@@ -146,13 +146,19 @@ if(subset_4_valid){
     subset_4_value <- input$subset_4
     dat_cut[,subset_4_names] <- factor(dat_cut[,subset_4_names])
     if("whole"%in%subset_4_value) {
-      if (subset_4_value[1] == "whole"){
-        observe({
-          updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(dat_cut[,subset_4_names])),selected = subset_4_value[2])
-        })
+      if (length(subset_4_value) > 1){
+        if (subset_4_value[1] == "whole"){
+          observe({
+            updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(dat_cut[,subset_4_names])),selected = subset_4_value[2])
+          })
+        } else {
+          observe({
+            updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(dat_cut[,subset_4_names])),selected = subset_4_value[-1])
+          })
+        }
       } else {
         observe({
-          updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(dat_cut[,subset_4_names])),selected = subset_4_value[-1])
+          updateSelectInput(session,"subset_4",label = label4_select_1, choices = c("whole",levels(dat_cut[,subset_4_names])),selected = "whole")
         })
       }
     }
