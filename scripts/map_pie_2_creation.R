@@ -1,4 +1,8 @@
-pal_2 <- terrain.colors(length(levels(map_df_pie_2$pie_2)))
+if (length(levels(map_df_pie_2$pie_2)) == 1){
+  pal_2 <- ("#3C7AB3")
+} else {
+  pal_2 <- terrain.colors(length(levels(map_df_pie_2$pie_2)))
+}
 prot_geo <- addLegend(map = prot_geo,"topright", title = map_pie_2_value, labels = levels(map_df_pie_2$pie_2),opacity = 0.7,colors = pal_2)
 
 for(i in name_map_df_pie_2){

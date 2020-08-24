@@ -1,4 +1,9 @@
-pal_3 <- topo.colors(length(levels(map_df_pie_3$pie_3)))
+if (length(levels(map_df_pie_3$pie_3)) == 1){
+  pal_3 <- ("#3C7AB3")
+} else {
+  pal_3 <- topo.colors(length(levels(map_df_pie_3$pie_3)))
+}
+
 prot_geo <- addLegend(map = prot_geo,"bottomright", title = map_pie_3_value, labels = levels(map_df_pie_3$pie_3),opacity = 0.7,colors = pal_3)
 
 for(i in name_map_df_pie_3){
