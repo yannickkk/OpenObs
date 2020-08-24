@@ -1,6 +1,11 @@
 #####Checking subset_2####
 if(subset_2){
   map_subset_2_value <- input$map_subset_2
+  
+  shiny::validate(
+    need(map_subset_2_value != "","Aucune selection pour subset_2")
+  )
+  
   map_dat_cut_subset_2<- map_dat_cut_subset_1
   if ("whole"%in%map_subset_2_value){
     map_dat_cut_subset_2 <- map_dat_cut_subset_1
@@ -18,6 +23,10 @@ if(subset_2){
   #####Multiple#####
   map_subset_2_2_value <- input$map_subset_2_2
   map_subset_2_1_value <- input$map_subset_2_1
+  
+  shiny::validate(
+    need(map_subset_2_2_value != "","Aucune selection pour subset_2")
+  )
   
   map_dat_cut_subset_2 <- map_dat_cut_subset_1
   if ("whole"%in%map_subset_2_2_value){

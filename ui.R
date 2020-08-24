@@ -22,6 +22,11 @@ label4_select_2 <- "subset_4" #Change to label name wanted
 
 source("scripts/creation_label_subsets.R", local = TRUE)
 #############################################
+######Label checkbox############
+label_checkbox_1 <- "Display weighted data : Number of bush meat occurrences divided by number of visits"
+label_checkbox_2 <- "Display logarithmic scale for y axis"
+################################
+
 ######### Label pie ##############
 source("scripts/creation_label_pies.R", local = TRUE)
 #############################################
@@ -54,8 +59,8 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               selectInput("subset_4_1",label = label4_select_2,choices = c(substring(subset_4_names,10))),
                               selectInput("subset_4_2",label = label4_select_3,choices = paste("whole",dat[,subset_4_names[1]]),multiple = TRUE,selected ="whole"),
                               ###################
-                              checkboxInput("checkbox", label = "Display weighted data : Number of bush meat occurrences divided by number of visits", value = FALSE),
-                              checkboxInput("checkboxlog", label = "Display logarithmic scale for y axis", value = FALSE),
+                              checkboxInput("checkbox", label = label_checkbox_1, value = FALSE),
+                              checkboxInput("checkboxlog", label = label_checkbox_2, value = FALSE),
                               dateRangeInput("dates", label = "Date range", start = paste0(date_min,"-01-01"), end = paste0(date_max,"-12-31"),min = paste0(date_min,"-01-01"),max =paste0(date_max,"-12-31"),format='yyyy',startview = "decade"),
                               actionButton("reset_input","Reset Inputs"),
                               width = 2),

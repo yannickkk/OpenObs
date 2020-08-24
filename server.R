@@ -26,6 +26,7 @@ server <- function(input, output, session) {
   ######Plotly#####
   output$plotly <- renderPlotly({
     
+    
     ########Filtrage des données en fonction des choix des subsets######
     if(subset_1_valid){
       source("scripts/subset_1_dataCreate.R", local = TRUE)

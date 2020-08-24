@@ -1,6 +1,11 @@
 #####Checking subset_4####
 if(subset_4){
   subset_4_value <- input$subset_4
+  
+  shiny::validate(
+    need(subset_4_value != "","Aucune selection pour subset_4")
+  )
+  
   dat_cut_subset_4<- dat_cut_subset_3
   if ("whole"%in%subset_4_value){
     dat_cut_subset_4 <- dat_cut_subset_3
@@ -18,6 +23,10 @@ if(subset_4){
   #####Multiple#####
   subset_4_2_value <- input$subset_4_2
   subset_4_1_value <- input$subset_4_1
+  
+  shiny::validate(
+    need(subset_4_2_value != "","Aucune selection pour subset_4")
+  )
   
   
   dat_cut_subset_4 <- dat_cut_subset_3
