@@ -71,24 +71,23 @@ map_pie_4_width <- 70
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
-
+wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
   couche_1 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_1 <- spTransform(couche_1,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]))){
   couche_2 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_2 <- spTransform(couche_2,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]))){
   couche_3 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_3 <- spTransform(couche_3,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]))){
   couche_4 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_4 <- spTransform(couche_4,wgs84)
 } 
-wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-couche_1 <- spTransform(couche_1,wgs84)
-couche_2 <- spTransform(couche_2,wgs84)
-couche_3 <- spTransform(couche_3,wgs84)
-couche_4 <- spTransform(couche_4,wgs84)
 
 
 ######Test cent_dist_geo
