@@ -284,7 +284,7 @@ server <- function(input, output, session) {
       })
     } else {
       name <- as.character(input$species)
-      link <<- paste0("https://species.wikimedia.org/wiki",name)
+      link <<- paste0("https://species.wikimedia.org/wiki/",name)
       output$frame <- renderUI({
         tags$iframe(src=link,height = 1200,width = 1600,frameborder = "no")
       })
