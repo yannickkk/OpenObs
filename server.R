@@ -201,6 +201,8 @@ server <- function(input, output, session) {
     #####Récupération coordonnées#######
     cent<-aggregate(map_dat_cut[,c(grep("^geo_2_lat", names(map_dat_cut)), grep("^geo_2_long", names(map_dat_cut)))], list(map_dat_cut[,grep("^geo_2~", names(map_dat_cut))]), mean)
     names(cent) <- c("name","lat","lng")
+    
+    print(cent)
     map_center_lng <- mean(cent[,"lng"], na.rm = TRUE)
     map_center_lat <- mean(cent[,"lat"], na.rm = TRUE)
     max_lng <- max(cent[,"lng"], na.rm = TRUE)
@@ -208,6 +210,7 @@ server <- function(input, output, session) {
     max_lat <- max(cent[,"lat"], na.rm = TRUE)
     min_lat <- min(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
+    
     ###################################
     
     #####Checking pie#####

@@ -90,13 +90,13 @@ if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques
 } 
 
 
-######Test cent_dist_geo
-# cent_dist_geo<-geojsonio::geojson_read("access/centroides_tirage.geojson", what = "sp",  stringsAsFactors = TRUE)
-# wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-# cent_dist_geo <- spTransform(cent_dist_geo,wgs84)
-# cent_dist_geo <- as.data.frame(cent_dist_geo)
-# names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
-# dat <- dat[,-c(4,5)]
+######Test cent_dist_geo##########
+if (file.exists(paste0("access/", list.files("access/")[grep("centroides_",list.files("access/"))]))){
+  cent_dist_geo <- geojsonio::geojson_read(paste0("access/",list.files("access/")[grep("centroides_",list.files("access"))]), what = "sp",  stringsAsFactors = TRUE)
+  cent_dist_geo <- spTransform(cent_dist_geo,wgs84)
+  cent_dist_geo <- as.data.frame(cent_dist_geo)
+  names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
+}
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
@@ -271,14 +271,25 @@ if (length(grep("^geo_2_lat", names(dat))) != 0){
     }
     dat$`geo_2_long~longitude` <- NA
     dat$`geo_2_lat~latitude` <- NA
-    for(i in levels(dat[,geo_1_names])){
+    if (geo_1_valid){
+      for(i in levels(dat[,geo_1_names])){
+        for (j in levels(dat[,geo_2_names])){
+          for (k in 1:nrow(cent_dist_geo)) {
+            if(i == as.character(cent_dist_geo[k,grep("^geo_1",names(cent_dist_geo))])) {
+              if (j == as.character(cent_dist_geo[k,geo_2_json])) {
+                dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
+                dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
+              }
+            }
+          }
+        }
+      }
+    } else {
       for (j in levels(dat[,geo_2_names])){
         for (k in 1:nrow(cent_dist_geo)) {
-          if(i == as.character(cent_dist_geo[k,grep("^geo_1",names(cent_dist_geo))])) {
-            if (j == as.character(cent_dist_geo[k,geo_2_json])) {
-              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
-              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
-            }
+          if (j == as.character(cent_dist_geo[k,geo_2_json])) {
+            dat[which(dat[,geo_2_names]==j),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
+            dat[which(dat[,geo_2_names]==j),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
           }
         }
       }
@@ -309,7 +320,6 @@ xaxis <- list(
   cex.lab = 0.5
 )
 ########################################################
-
 ########################################################
 #####sauvegarde du jeu de données complet
 datt<-dat
