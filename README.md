@@ -1,5 +1,5 @@
-# openobs
-Openobs est une application opensource de visualisation de données développé à l'aide de R{shiny}
+# OpenObs
+OpenObs est une application opensource de visualisation de données développé à l'aide de R{shiny}
 
 Elle est destinée à l'affichage d'observations répétées dans le temps et triées d'espèces ou d'individus.
 Elle est une aide pour les personnels impliquées dans le traitement des données car elle permet des tries variés des données en appliquant des rêgles simples de nommage des colonnes du jeu de données.
