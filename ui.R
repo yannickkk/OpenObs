@@ -1,38 +1,10 @@
-##########variables de la page##############
 
-titre_fenetre <- "Test"
-
-logo <-"esi.gif"
-
-logo_lien <- "https://www.facebook.com/esicongo"
-
-
-
-######### Titre des onglets #################
-
-titre_onglet1 <- "Vue des données"
-titre_onglet2 <- "Spatial viewer"
-titre_onglet3 <- "Species information"
-
-######### Label subset ##############
-label1_select_2 <- "subset_1" #Change to label name wanted
-label2_select_2 <- "subset_2" #Change to label name wanted
-label3_select_2 <- "subset_3" #Change to label name wanted
-label4_select_2 <- "subset_4" #Change to label name wanted
-
+###########Creation des labels###############
 source("scripts/creation_label_subsets.R", local = TRUE)
-#############################################
-######Label checkbox############
-label_checkbox_1 <- "Display weighted data : Number of bush meat occurrences divided by number of visits"
-label_checkbox_2 <- "Display logarithmic scale for y axis"
-################################
 
-######### Label pie ##############
 source("scripts/creation_label_pies.R", local = TRUE)
 #############################################
-######### Label geo ##############
-label1_geo_1 <- "Select geo_1"
-label1_geo_2 <- "Select geo_2"
+
 
 ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, style="margin-top: -15px",height ="50" ,width ="179" ), href=logo_lien, target ="_blank")),
                  tabPanel(titre_onglet1,
@@ -99,13 +71,13 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               ###################
                               #####Pie###########
                               selectInput("map_pie_1",label=label1_pie_1,choices = c(substring(pie_1_names,7))),
-                              checkboxInput("map_pie_1_button", label ="Display pie_1", value = FALSE),
+                              checkboxInput("map_pie_1_button", label = paste("Afficher",label1_pie_1), value = FALSE),
                               selectInput("map_pie_2",label=label1_pie_2,choices = c(substring(pie_2_names,7))),
-                              checkboxInput("map_pie_2_button", label ="Display pie_2", value = FALSE),
+                              checkboxInput("map_pie_2_button", label =paste("Afficher",label1_pie_2), value = FALSE),
                               selectInput("map_pie_3",label=label1_pie_3,choices = c(substring(pie_3_names,7))),
-                              checkboxInput("map_pie_3_button", label ="Display pie_3", value = FALSE),
+                              checkboxInput("map_pie_3_button", label =paste("Afficher",label1_pie_3), value = FALSE),
                               selectInput("map_pie_4",label=label1_pie_4,choices = c(substring(pie_4_names,7))),
-                              checkboxInput("map_pie_4_button", label ="Display pie_4", value = FALSE),
+                              checkboxInput("map_pie_4_button", label =paste("Afficher",label1_pie_4), value = FALSE),
                               ###################
                               #####Geo###########
                               selectInput("map_geo_1",label=label1_geo_1,choices = c(substring(geo_1_names,7))),
