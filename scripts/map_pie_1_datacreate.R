@@ -1,6 +1,7 @@
 #####Checking pie_1######
 map_pie_1_value <- input$map_pie_1
 
+
 for (i in pie_1_names){
   if (i == paste0("pie_1~",map_pie_1_value)){
     map_df_pie_1 <- data.frame(table(map_dat_cut[,geo_2_names],map_dat_cut[,i]))
@@ -31,6 +32,9 @@ for (i in levels(map_df_pie_1$geo_2)){
   assign(name,df_geo_2)
   name_map_df_pie_1 <- c(name_map_df_pie_1,name)
 }
+
+
+
 
 ###########################
 

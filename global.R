@@ -67,6 +67,23 @@ map_pie_3_width <- 70
 map_pie_4_width <- 70
 
 ##########################################
+############Couleurs des pie_charts###############
+## Ne changer les couleurs que si vous êtes sur ##
+## du nombre de paramètres affichés. La taille  ##
+## du vecteur doit correspondre au nombre de    ##
+## paramètre affiché.
+
+###Passer en TRUE si utilisation de ses propres couleurs
+own_colors <- FALSE 
+
+if (own_colors){
+  pal_1 <- c("#3C7AB3") ##Pie_1
+  pal_2 <- c("#3C7AB3") ##Pie_2 
+  pal_3 <- c("#3C7AB3") ##Pie_3
+  pal_4 <- c("#3C7AB3") ##Pie_4
+}
+
+###Lien utile : https://www.code-couleur.com/
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")

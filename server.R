@@ -230,7 +230,7 @@ server <- function(input, output, session) {
     ########################
     
     ########Création map#####
-    tilesURL <- "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+    tilesURL <- input$map_type_carte
     
     prot_geo <- leaflet() %>%
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
