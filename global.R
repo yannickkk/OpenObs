@@ -67,37 +67,53 @@ map_pie_3_width <- 70
 map_pie_4_width <- 70
 
 ##########################################
+############Couleurs des pie_charts###############
+## Ne changer les couleurs que si vous êtes sur ##
+## du nombre de paramètres affichés. La taille  ##
+## du vecteur doit correspondre au nombre de    ##
+## paramètre affiché.
+
+###Passer en TRUE si utilisation de ses propres couleurs
+own_colors <- FALSE 
+
+if (own_colors){
+  pal_1 <- c("#3C7AB3") ##Pie_1
+  pal_2 <- c("#3C7AB3") ##Pie_2 
+  pal_3 <- c("#3C7AB3") ##Pie_3
+  pal_4 <- c("#3C7AB3") ##Pie_4
+}
+
+###Lien utile : https://www.code-couleur.com/
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
-
+wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
   couche_1 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_1 <- spTransform(couche_1,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]))){
   couche_2 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_2 <- spTransform(couche_2,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]))){
   couche_3 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_3 <- spTransform(couche_3,wgs84)
 } 
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]))){
   couche_4 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]), what = "sp")
+  couche_4 <- spTransform(couche_4,wgs84)
 } 
-wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-couche_1 <- spTransform(couche_1,wgs84)
-couche_2 <- spTransform(couche_2,wgs84)
-couche_3 <- spTransform(couche_3,wgs84)
-couche_4 <- spTransform(couche_4,wgs84)
 
 
-######Test cent_dist_geo
-# cent_dist_geo<-geojsonio::geojson_read("access/centroides_tirage.geojson", what = "sp",  stringsAsFactors = TRUE)
-# wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-# cent_dist_geo <- spTransform(cent_dist_geo,wgs84)
-# cent_dist_geo <- as.data.frame(cent_dist_geo)
-# names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
-# dat <- dat[,-c(4,5)]
+######Test cent_dist_geo##########
+if (file.exists(paste0("access/", list.files("access/")[grep("centroides_",list.files("access/"))]))){
+  cent_dist_geo <- geojsonio::geojson_read(paste0("access/",list.files("access/")[grep("centroides_",list.files("access"))]), what = "sp",  stringsAsFactors = TRUE)
+  cent_dist_geo <- spTransform(cent_dist_geo,wgs84)
+  cent_dist_geo <- as.data.frame(cent_dist_geo)
+  names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
+}
 
 #dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
 
@@ -272,14 +288,25 @@ if (length(grep("^geo_2_lat", names(dat))) != 0){
     }
     dat$`geo_2_long~longitude` <- NA
     dat$`geo_2_lat~latitude` <- NA
-    for(i in levels(dat[,geo_1_names])){
+    if (geo_1_valid){
+      for(i in levels(dat[,geo_1_names])){
+        for (j in levels(dat[,geo_2_names])){
+          for (k in 1:nrow(cent_dist_geo)) {
+            if(i == as.character(cent_dist_geo[k,grep("^geo_1",names(cent_dist_geo))])) {
+              if (j == as.character(cent_dist_geo[k,geo_2_json])) {
+                dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
+                dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
+              }
+            }
+          }
+        }
+      }
+    } else {
       for (j in levels(dat[,geo_2_names])){
         for (k in 1:nrow(cent_dist_geo)) {
-          if(i == as.character(cent_dist_geo[k,grep("^geo_1",names(cent_dist_geo))])) {
-            if (j == as.character(cent_dist_geo[k,geo_2_json])) {
-              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
-              dat[which(dat[,geo_2_names]==j & dat[,geo_1_names] == i),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
-            }
+          if (j == as.character(cent_dist_geo[k,geo_2_json])) {
+            dat[which(dat[,geo_2_names]==j),"geo_2_long~longitude"] <- cent_dist_geo[k,grep("^geo_2_long",names(cent_dist_geo))]
+            dat[which(dat[,geo_2_names]==j),"geo_2_lat~latitude"] <- cent_dist_geo[k,grep("^geo_2_lat",names(cent_dist_geo))]
           }
         }
       }
@@ -310,7 +337,6 @@ xaxis <- list(
   cex.lab = 0.5
 )
 ########################################################
-
 ########################################################
 #####sauvegarde du jeu de données complet
 datt<-dat

@@ -1,8 +1,5 @@
-if (date_valid){
-  jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),1,4))
-} else {
-  jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),7,10))
-}
+jours_visite_annee<-table(substring(unique(dat_cut[,"subset_date~date"]),1,4))
+
 for (i in names(jours_visite_annee)) {
   b_an[which(as.character(b_an[,"annee"]) == i), "Freq"] <- round(b_an[which(as.character(b_an[,"annee"]) == i), "Freq"]/jours_visite_annee[i],2)
 }

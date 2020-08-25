@@ -26,6 +26,7 @@ server <- function(input, output, session) {
   ######Plotly#####
   output$plotly <- renderPlotly({
     
+    
     ########Filtrage des données en fonction des choix des subsets######
     if(subset_1_valid){
       source("scripts/subset_1_dataCreate.R", local = TRUE)
@@ -207,6 +208,7 @@ server <- function(input, output, session) {
     max_lat <- max(cent[,"lat"], na.rm = TRUE)
     min_lat <- min(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
+    
     ###################################
     
     #####Checking pie#####
@@ -228,7 +230,7 @@ server <- function(input, output, session) {
     ########################
     
     ########Création map#####
-    tilesURL <- "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
+    tilesURL <- input$map_type_carte
     
     prot_geo <- leaflet() %>%
       addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
@@ -283,7 +285,7 @@ server <- function(input, output, session) {
       })
     } else {
       name <- as.character(input$species)
-      link <<- paste0("https://species.wikimedia.org/wiki",name)
+      link <<- paste0("https://species.wikimedia.org/wiki/",name)
       output$frame <- renderUI({
         tags$iframe(src=link,height = 1200,width = 1600,frameborder = "no")
       })
