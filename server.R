@@ -209,6 +209,8 @@ server <- function(input, output, session) {
     min_lat <- min(cent[,"lat"], na.rm = TRUE)
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
     
+    
+
     ###################################
     
     #####Checking pie#####
@@ -233,8 +235,8 @@ server <- function(input, output, session) {
     tilesURL <- input$map_type_carte
     
     prot_geo <- leaflet() %>%
-      addTiles(tilesURL) %>% #Add default OpenStreetMap map tiles
-      fitBounds(max_lng,max_lat,min_lng,min_lat)
+      addTiles(tilesURL) %>%
+      fitBounds(max_lng+0.01,max_lat+0.01,min_lng-0.01,min_lat-0.01)
     ###########################
     
     ########Ajout couche additionnelle###############
