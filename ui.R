@@ -74,6 +74,8 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                  tabPanel(titre_onglet2,
                           sidebarLayout(
                             sidebarPanel(
+                              ####Type de carte#####
+                              selectInput("map_type_carte", label = "Select basemap", choices = c("topomap" = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" ,"OpenStreetMap" = "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", "Thunderforest"= "//{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=b1aae45961fd48eeaf90a28684e31929", "ArcGIS (Satellite)" = "http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", "ArcGIS (World Topo)" ="http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" )),
                               ############subset###############
                               #####subset_1#####
                               selectInput("map_subset_1",label= label1_select_1,choices = c("whole",levels(dat[,subset_1_names])),selected = "whole",multiple=TRUE),
@@ -110,8 +112,6 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               ####################
                               dateRangeInput("map_dates", label = "Date range", start = paste0(date_min,"-01-01"), end = paste0(date_max,"-12-31"),min = paste0(date_min,"-01-01"),max =paste0(date_max,"-12-31"),format='yyyy',startview = "decade"),
                               actionButton("map_reset_input","Reset Inputs"),
-                              ####Type de carte#####
-                              selectInput("map_type_carte", label = "Select basemap", choices = c("topomap" = "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" ,"OpenStreetMap" = "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", "Thunderforest"= "//{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=b1aae45961fd48eeaf90a28684e31929", "ArcGIS (Satellite)" = "http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", "ArcGIS (World Topo)" ="http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}" )),
                               width = 2
                             ),
                             mainPanel(leafletOutput("map",height = 850),

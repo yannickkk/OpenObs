@@ -88,6 +88,8 @@ if (own_colors){
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
+print(summary(dat))
+
 wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
   couche_1 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]), what = "sp")
@@ -139,8 +141,8 @@ geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
 
 #####Récupération wikisp et link#########
-if (length(names(dat)[grep("_wikisp",names(dat))]) != 0){
-  wikisp_names <- names(dat)[grep("wiki_sp",names(dat))]
+if (length(names(dat)[grep("^wikisp",names(dat))]) != 0){
+  wikisp_names <- names(dat)[grep("^wikisp",names(dat))]
 } else {
   wikisp_names <- x_axis_names
 }
