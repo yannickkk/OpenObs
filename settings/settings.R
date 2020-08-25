@@ -35,7 +35,6 @@ label1_pie_4 <- "Select pie_4"
 ##################################
 ######### Label geo ##############
 label1_geo_1 <- "Select geo_1"
-label1_geo_2 <- "Select geo_2"
 ##################################
 
 ###########Options des différents couches additionnelles#################
