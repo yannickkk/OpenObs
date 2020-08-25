@@ -24,69 +24,11 @@ library(data.table)
 library(lubridate)
 library(magrittr)
 
-
-
-###########Options des différents couches additionnelles#################
-#####Couche 1#####
-map_stroke_couche_1 <- TRUE
-map_weight_couche_1 <- 1
-map_fill_couche_1 <- TRUE
-map_smoothFactor_couche_1 <- 1
-map_color_couche_1 <- "green"
-map_fillOpacity_couche_1 <- 0
-##################
-#####Couche 2#####
-map_stroke_couche_2 <- TRUE
-map_weight_couche_2 <- 1
-map_fill_couche_2 <- TRUE
-map_smoothFactor_couche_2 <- 1
-map_color_couche_2 <- "red"
-map_fillOpacity_couche_2 <- 0
-##################
-#####Couche 3#####
-map_stroke_couche_3 <- TRUE
-map_weight_couche_3 <- 1
-map_fill_couche_3 <- TRUE
-map_smoothFactor_couche_3 <- 1
-map_color_couche_3 <- "blue"
-map_fillOpacity_couche_3 <- 0
-##################
-#####Couche 4#####
-map_stroke_couche_4 <- TRUE
-map_weight_couche_4 <- 1
-map_fill_couche_4 <- TRUE
-map_smoothFactor_couche_4 <- 1
-map_color_couche_4 <- "yellow"
-map_fillOpacity_couche_4 <- 0
-##################
-
-#####Options des différents pie chart#####
-map_pie_1_width <- 70
-map_pie_2_width <- 70
-map_pie_3_width <- 70
-map_pie_4_width <- 70
-
-##########################################
-############Couleurs des pie_charts###############
-## Ne changer les couleurs que si vous êtes sur ##
-## du nombre de paramètres affichés. La taille  ##
-## du vecteur doit correspondre au nombre de    ##
-## paramètre affiché.
-
-###Passer en TRUE si utilisation de ses propres couleurs
-own_colors <- FALSE 
-
-if (own_colors){
-  pal_1 <- c("#3C7AB3") ##Pie_1
-  pal_2 <- c("#3C7AB3") ##Pie_2 
-  pal_3 <- c("#3C7AB3") ##Pie_3
-  pal_4 <- c("#3C7AB3") ##Pie_4
-}
-
-###Lien utile : https://www.code-couleur.com/
+source("settings/settings.R")
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
+
 
 wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
@@ -139,8 +81,8 @@ geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
 
 #####Récupération wikisp et link#########
-if (length(names(dat)[grep("_wikisp",names(dat))]) != 0){
-  wikisp_names <- names(dat)[grep("wiki_sp",names(dat))]
+if (length(names(dat)[grep("^wikisp",names(dat))]) != 0){
+  wikisp_names <- names(dat)[grep("^wikisp",names(dat))]
 } else {
   wikisp_names <- x_axis_names
 }
