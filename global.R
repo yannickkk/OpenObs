@@ -29,6 +29,10 @@ source("settings/settings.R")
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
+if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))]))){
+  html <- paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))])
+} 
+
 
 wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
 if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
