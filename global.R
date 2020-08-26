@@ -29,6 +29,8 @@ source("settings/settings.R")
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
+#dat <- as.data.frame(fread(paste0("donnees/",name_data), stringsAsFactors = TRUE))
+
 if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))]))){
   html <- paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))])
 } 
