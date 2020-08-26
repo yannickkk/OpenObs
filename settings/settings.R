@@ -15,101 +15,102 @@ if(file.exists("donnees/settings.csv")){
   titre_onglet1 <- as.character(settings[4,2])
   titre_onglet2 <- as.character(settings[5,2])
   titre_onglet3 <- as.character(settings[6,2])
+  titre_onglet4 <- as.character(settings[7,2])
   #############################################
   
   ######### Label subset ##############
-  label1_select_2 <- as.character(settings[7,2])
-  label2_select_2 <- as.character(settings[8,2])
-  label3_select_2 <- as.character(settings[9,2])
-  label4_select_2 <- as.character(settings[10,2])
+  label1_select_2 <- as.character(settings[8,2])
+  label2_select_2 <- as.character(settings[9,2])
+  label3_select_2 <- as.character(settings[10,2])
+  label4_select_2 <- as.character(settings[11,2])
   
   #############################################
   ######Label checkbox############
-  label_checkbox_1 <- as.character(settings[11,2])
-  label_checkbox_2 <- as.character(settings[12,2])
+  label_checkbox_1 <- as.character(settings[12,2])
+  label_checkbox_2 <- as.character(settings[13,2])
   ################################
   
   ######### Label pie ##############
-  label1_pie_1 <- as.character(settings[13,2])
-  label1_pie_2 <- as.character(settings[14,2])
-  label1_pie_3 <- as.character(settings[15,2])
-  label1_pie_4 <- as.character(settings[16,2])
+  label1_pie_1 <- as.character(settings[14,2])
+  label1_pie_2 <- as.character(settings[15,2])
+  label1_pie_3 <- as.character(settings[16,2])
+  label1_pie_4 <- as.character(settings[17,2])
   ##################################
   ######### Label geo ##############
-  label1_geo_1 <- as.character(settings[17,2])
+  label1_geo_1 <- as.character(settings[18,2])
   ##################################
   
   ###########Options des différents couches additionnelles#################
   #####Couche 1#####
-  if(settings[18,2] == "TRUE"){
+  if(settings[19,2] == "TRUE"){
     map_stroke_couche_1 <- TRUE
   } else {
     map_stroke_couche_1 <- FALSE
   }
-  map_weight_couche_1 <- as.numeric(settings[19,2])
-  if(settings[20,2] == "TRUE"){
+  map_weight_couche_1 <- as.numeric(settings[20,2])
+  if(settings[21,2] == "TRUE"){
     map_fill_couche_1 <- TRUE
   } else {
     map_fill_couche_1 <- FALSE
   }
-  map_smoothFactor_couche_1 <- as.numeric(settings[21,2])
-  map_color_couche_1 <- as.character(settings[22,2])
-  map_fillOpacity_couche_1 <- as.numeric(settings[23,2])
+  map_smoothFactor_couche_1 <- as.numeric(settings[22,2])
+  map_color_couche_1 <- as.character(settings[23,2])
+  map_fillOpacity_couche_1 <- as.numeric(settings[24,2])
   ##################
   #####Couche 2#####
-  if(settings[24,2] == "TRUE"){
+  if(settings[25,2] == "TRUE"){
     map_stroke_couche_2 <- TRUE
   } else {
     map_stroke_couche_2 <- FALSE
   }
-  map_weight_couche_2 <- as.numeric(settings[25,2])
-  if(settings[26,2] == "TRUE"){
+  map_weight_couche_2 <- as.numeric(settings[26,2])
+  if(settings[27,2] == "TRUE"){
     map_fill_couche_2 <- TRUE
   } else {
     map_fill_couche_2 <- FALSE
   }
-  map_smoothFactor_couche_2 <- as.numeric(settings[27,2])
-  map_color_couche_2 <- as.character(settings[28,2])
-  map_fillOpacity_couche_2 <- as.numeric(settings[29,2])
+  map_smoothFactor_couche_2 <- as.numeric(settings[28,2])
+  map_color_couche_2 <- as.character(settings[29,2])
+  map_fillOpacity_couche_2 <- as.numeric(settings[30,2])
   ##################
   #####Couche 3#####
-  if(settings[30,2] == "TRUE"){
+  if(settings[31,2] == "TRUE"){
     map_stroke_couche_3 <- TRUE
   } else {
     map_stroke_couche_3 <- FALSE
   }
-  map_weight_couche_3 <- as.numeric(settings[31,2])
-  if(settings[32,2] == "TRUE"){
+  map_weight_couche_3 <- as.numeric(settings[32,2])
+  if(settings[33,2] == "TRUE"){
     map_fill_couche_3 <- TRUE
   } else {
     map_fill_couche_3 <- FALSE
   }
-  map_smoothFactor_couche_3 <- as.numeric(settings[33,2])
-  map_color_couche_3 <- as.character(settings[34,2])
-  map_fillOpacity_couche_3 <- as.numeric(settings[35,2])
+  map_smoothFactor_couche_3 <- as.numeric(settings[34,2])
+  map_color_couche_3 <- as.character(settings[35,2])
+  map_fillOpacity_couche_3 <- as.numeric(settings[36,2])
   ##################
   #####Couche 4#####
-  if(settings[36,2] == "TRUE"){
+  if(settings[37,2] == "TRUE"){
     map_stroke_couche_4 <- TRUE
   } else {
     map_stroke_couche_4 <- FALSE
   }
-  map_weight_couche_4 <- as.numeric(settings[37,2])
-  if(settings[38,2] == "TRUE"){
+  map_weight_couche_4 <- as.numeric(settings[38,2])
+  if(settings[39,2] == "TRUE"){
     map_fill_couche_4 <- TRUE
   } else {
     map_fill_couche_4 <- FALSE
   }
-  map_smoothFactor_couche_4 <- as.numeric(settings[39,2])
-  map_color_couche_4 <- as.character(settings[40,2])
-  map_fillOpacity_couche_4 <- as.numeric(settings[41,2])
+  map_smoothFactor_couche_4 <- as.numeric(settings[40,2])
+  map_color_couche_4 <- as.character(settings[41,2])
+  map_fillOpacity_couche_4 <- as.numeric(settings[42,2])
   ##################
   
   #####Options des différents pie chart#####
-  map_pie_1_width <- as.numeric(settings[42,2])
-  map_pie_2_width <- as.numeric(settings[43,2])
-  map_pie_3_width <- as.numeric(settings[44,2])
-  map_pie_4_width <- as.numeric(settings[45,2])
+  map_pie_1_width <- as.numeric(settings[43,2])
+  map_pie_2_width <- as.numeric(settings[44,2])
+  map_pie_3_width <- as.numeric(settings[45,2])
+  map_pie_4_width <- as.numeric(settings[46,2])
   
   ##########################################
   ############Couleurs des pie_charts###############
@@ -119,7 +120,7 @@ if(file.exists("donnees/settings.csv")){
   ## paramètre affiché.
   
   ###Passer en TRUE si utilisation de ses propres couleurs
-  if (settings[46,2] == "TRUE"){
+  if (settings[47,2] == "TRUE"){
     own_colors <- TRUE
   } else {
     own_colors <- FALSE
@@ -127,10 +128,10 @@ if(file.exists("donnees/settings.csv")){
   
   
   if (own_colors){
-    pal_1 <- str_split(settings[47,2],",") ##Pie_1
-    pal_2 <- str_split(settings[48,2],",") ##Pie_2 
-    pal_3 <- str_split(settings[49,2],",") ##Pie_3
-    pal_4 <- str_split(settings[50,2],",") ##Pie_4
+    pal_1 <- str_split(settings[48,2],",") ##Pie_1
+    pal_2 <- str_split(settings[49,2],",") ##Pie_2 
+    pal_3 <- str_split(settings[50,2],",") ##Pie_3
+    pal_4 <- str_split(settings[51,2],",") ##Pie_4
   }
   
   ###Lien utile : https://www.code-couleur.com/
@@ -150,6 +151,7 @@ if(file.exists("donnees/settings.csv")){
   titre_onglet1 <- "Vue des données"
   titre_onglet2 <- "Spatial viewer"
   titre_onglet3 <- "Species information"
+  titre_onglet4 <- "Protocol"
   #############################################
   
   ######### Label subset ##############

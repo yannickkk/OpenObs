@@ -102,7 +102,10 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               htmlOutput("frame")
                             )
                           )
-                        )
+                        )#,
+                 # tabPanel(titre_onglet4,
+                 #          includeHTML(html)
+                 #          )
 )
                               
                               
