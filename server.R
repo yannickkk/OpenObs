@@ -60,6 +60,11 @@ server <- function(input, output, session) {
     #####################
     dat_cut <- dat_cut_date
     
+    
+    shiny::validate(
+      need(length(dat_cut[,1])!= 0,"Pas de données à afficher correspondant à cette sélection")
+    )
+    
     ######Mise à jour UI########
     source("scripts/Update_UI_2_subset.R", local = TRUE)
     ############################
