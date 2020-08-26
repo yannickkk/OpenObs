@@ -10,6 +10,7 @@ for (i in pie_1_names){
 
 names(map_df_pie_1) <- c("geo_2",map_pie_1_value,"Freq")
 
+
 map_df_pie_1$lng <- NA
 map_df_pie_1$lat <- NA
 for (i in unique(cent[,"name"])){

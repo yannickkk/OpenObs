@@ -60,6 +60,11 @@ server <- function(input, output, session) {
     #####################
     dat_cut <- dat_cut_date
     
+    
+    shiny::validate(
+      need(length(dat_cut[,1])!= 0,"Pas de données à afficher correspondant à cette sélection")
+    )
+    
     ######Mise à jour UI########
     source("scripts/Update_UI_2_subset.R", local = TRUE)
     ############################
@@ -198,6 +203,9 @@ server <- function(input, output, session) {
     )
     ######################################################
     
+    shiny::validate(
+      need(length(map_dat_cut[,1])!= 0,"Pas de données à afficher correspondant à cette sélection")
+    )
     #####Récupération coordonnées#######
     cent<-aggregate(map_dat_cut[,c(grep("^geo_2_lat", names(map_dat_cut)), grep("^geo_2_long", names(map_dat_cut)))], list(map_dat_cut[,grep("^geo_2~", names(map_dat_cut))]), mean)
     names(cent) <- c("name","lat","lng")
@@ -210,7 +218,7 @@ server <- function(input, output, session) {
     map_dat_cut[,geo_2_names] <- factor(map_dat_cut[,geo_2_names], exclude = NULL)
     
     
-
+    
     ###################################
     
     #####Checking pie#####
@@ -274,6 +282,7 @@ server <- function(input, output, session) {
       source("scripts/map_pie_4_creation.r",local= TRUE)
     }
     ##################################
+    
     prot_geo
     
   })
