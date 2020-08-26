@@ -29,6 +29,9 @@ source("settings/settings.R")
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
 source("access/access_box.R")
 
+#dat <- as.data.frame(fread(paste0("donnees/",name_data), stringsAsFactors = TRUE))
+dat <- as.data.frame(fread("donnees/oiseaux.csv", stringsAsFactors = TRUE))
+
 if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))]))){
   html <- paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))])
 } 
@@ -85,11 +88,13 @@ geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
 
 #####Récupération wikisp et link#########
-if (length(names(dat)[grep("^wikisp",names(dat))]) != 0){
-  wikisp_names <- names(dat)[grep("^wikisp",names(dat))]
+if (length(names(dat)[grep("wikisp",names(dat))]) != 0){
+  wikisp_names <- names(dat)[grep("wikisp",names(dat))]
 } else {
   wikisp_names <- x_axis_names
 }
+
+print(wikisp_names)
 
 link_names <- names(dat)[grep("^link",names(dat))]
 #########################################
