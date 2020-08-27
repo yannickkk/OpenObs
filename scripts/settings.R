@@ -121,22 +121,24 @@ if(file.exists("donnees/settings.csv")){
   ## paramètre affiché.
   
   ###Passer en TRUE si utilisation de ses propres couleurs
-  if (settings[47,1] == "TRUE"){
+  axe_ordonnee <- as.character(settings[47,1])
+  axe_abscisse <- as.character(settings[48,1])
+  
+  if (settings[49,1] == "TRUE"){
     own_colors <- TRUE
   } else {
     own_colors <- FALSE
   }
   
   
+  
   if (own_colors){
-    pal_1 <- str_split(settings[48,1],",") ##Pie_1
-    pal_2 <- str_split(settings[49,1],",") ##Pie_2 
-    pal_3 <- str_split(settings[50,1],",") ##Pie_3
-    pal_4 <- str_split(settings[51,1],",") ##Pie_4
+    pal_1 <- str_split(settings[50,1],",") ##Pie_1
+    pal_2 <- str_split(settings[51,1],",") ##Pie_2 
+    pal_3 <- str_split(settings[52,1],",") ##Pie_3
+    pal_4 <- str_split(settings[53,1],",") ##Pie_4
   }
   
-  axe_ordonnee <- as.character(settings[52,1])
-  axe_abscisse <- as.character(settings[53,1])
   
   ###Lien utile : https://www.code-couleur.com/
 } else {
@@ -228,6 +230,10 @@ if(file.exists("donnees/settings.csv")){
   ## paramètre affiché.
   
   ###Passer en TRUE si utilisation de ses propres couleurs
+  
+  axe_ordonnee <- "Nombre d'occurences"
+  axe_abscisse <- "Especes"
+  
   own_colors <- FALSE 
   
   if (own_colors){
@@ -239,7 +245,6 @@ if(file.exists("donnees/settings.csv")){
   
   ###Lien utile : https://www.code-couleur.com/
   
-  axe_ordonnee <- "Nombre d'occurences"
-  axe_abscisse <- "Especes"
+
 }
 
