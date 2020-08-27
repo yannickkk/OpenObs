@@ -1,7 +1,7 @@
 ##########variables de la page##############
 if(file.exists("donnees/settings.csv")){
   settings <- read.csv("donnees/settings.csv")
-  if (length(settings[,1]) == 53){
+  if (length(settings[,1]) == 54){
     settings <- settings[-1,]
   }
   
@@ -135,6 +135,9 @@ if(file.exists("donnees/settings.csv")){
     pal_4 <- str_split(settings[51,1],",") ##Pie_4
   }
   
+  axe_ordonnee <- as.character(settings[52,1])
+  axe_abscisse <- as.character(settings[53,1])
+  
   ###Lien utile : https://www.code-couleur.com/
 } else {
   ##########variables de la page##############
@@ -234,7 +237,9 @@ if(file.exists("donnees/settings.csv")){
     pal_4 <- c("#3C7AB3") ##Pie_4
   }
   
-  name_data <- "data.csv"
   ###Lien utile : https://www.code-couleur.com/
+  
+  axe_ordonnee <- "Nombre d'occurences"
+  axe_abscisse <- "Especes"
 }
 

@@ -5,13 +5,13 @@ if(input$checkboxlog){
     
   }
   yaxis <- list(
-    title = 'log(meat occurrences)',
+    title = axe_ordonnee,
     cex.axis =0.5,
     cex.lab = 0.5
   )
 } else {
   yaxis <- list(
-    title = 'meat occurrences',
+    title = axe_ordonnee,
     cex.axis =0.5,
     cex.lab = 0.5
   )

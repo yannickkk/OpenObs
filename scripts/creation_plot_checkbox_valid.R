@@ -9,13 +9,13 @@ if(input$checkboxlog){
     b_an[i,3] <- log(1+b_an[i,3])
   }
   yaxis <- list(
-    title = 'log(meat occurrences/nber of visits)',
+    title = axe_ordonnee,
     cex.axis =0.5,
     cex.lab = 0.5
   )
 } else {
   yaxis <- list(
-    title = 'meat occurrences/number of visits',
+    title = axe_ordonnee,
     cex.axis =0.5,
     cex.lab = 0.5
   )
