@@ -279,7 +279,7 @@ m <- list(
 )
 
 xaxis <- list(
-  title = 'species',
+  title = axe_abscisse,
   cex.axis =0.5,
   cex.lab = 0.5
 )
