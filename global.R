@@ -10,8 +10,8 @@ library(tidyverse)
 library(tidyr)
 library(shiny)
 library(markdown)
-library(shinyjs)
-library(shinyauthr)
+#library(shinyjs)
+#library(shinyauthr)
 library(leaflet)
 library(leaflet.minicharts)
 library(geojsonio)
@@ -27,10 +27,11 @@ library(magrittr)
 source("settings/settings.R")
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
-source("access/access_box.R")
+#source("access/access_box.R")
 
-#dat <- as.data.frame(fread(paste0("donnees/",name_data), stringsAsFactors = TRUE))
-dat <- as.data.frame(fread("donnees/oiseaux.csv", stringsAsFactors = TRUE))
+dat <- as.data.frame(fread(paste0("donnees/",name_data), stringsAsFactors = TRUE))
+#dat <- as.data.frame(fread("donnees/oiseaux.csv", stringsAsFactors = TRUE))
+
 
 if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))]))){
   html <- paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))])
@@ -64,8 +65,6 @@ if (file.exists(paste0("access/", list.files("access/")[grep("centroides_",list.
   names(cent_dist_geo) <- gsub("\\.","\\~",names(cent_dist_geo))
 }
 
-#dat<- read.csv("C:/Users/Utilisateur/Desktop/OpenObs/DonneesBrutes/YC_tiques_individu/data_tiques_final.csv", header = TRUE, encoding = "UTF-08")
-
 col_pie<-grep("pie", names(dat))
 dat[,col_pie]<-apply(dat[,col_pie],2,as.character)
 dat[,col_pie][is.na(dat[,col_pie])]<- "non recherché"
@@ -88,13 +87,12 @@ geo_2_names <- names(dat)[grep("^geo_2~", tolower(names(dat)))]
 #################################
 
 #####Récupération wikisp et link#########
-if (length(names(dat)[grep("wikisp",names(dat))]) != 0){
-  wikisp_names <- names(dat)[grep("wikisp",names(dat))]
+if(length(prefixes[grep("_wikisp",prefixes)]) != 0){
+  wikisp_names <- str_replace(paste0(prefixes[grep("_wikisp",prefixes)],suffixes[grep("_wikisp",prefixes)]),"_wikisp","~")
+  colnames(dat)[grep(prefixe[grep(prefixes[grep("_wikisp",prefixes)],prefixe)],colnames(dat))] <- wikisp_names
 } else {
-  wikisp_names <- x_axis_names
+  wikisp_names <- x_axis_name
 }
-
-print(wikisp_names)
 
 link_names <- names(dat)[grep("^link",names(dat))]
 #########################################
