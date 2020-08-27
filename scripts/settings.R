@@ -134,8 +134,6 @@ if(file.exists("donnees/settings.csv")){
     pal_4 <- str_split(settings[51,2],",") ##Pie_4
   }
   
-  name_data <- paste0("data_",paste0(settings[52,3],".csv"))
-  
   ###Lien utile : https://www.code-couleur.com/
 } else {
   ##########variables de la page##############

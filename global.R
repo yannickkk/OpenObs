@@ -24,12 +24,12 @@ library(data.table)
 library(lubridate)
 library(magrittr)
 
-source("settings/settings.R")
+source("scripts/settings.R")
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
-#source("access/access_box.R")
+source("access/access_box.R")
 
-dat <- as.data.frame(fread("donnees/data.csv", stringsAsFactors = TRUE))
+#dat <- as.data.frame(fread("donnees/data.csv", stringsAsFactors = TRUE))
 #dat <- as.data.frame(fread("donnees/oiseaux.csv", stringsAsFactors = TRUE))
 
 
@@ -91,7 +91,7 @@ if(length(prefixes[grep("_wikisp",prefixes)]) != 0){
   wikisp_names <- str_replace(paste0(prefixes[grep("_wikisp",prefixes)],suffixes[grep("_wikisp",prefixes)]),"_wikisp","~")
   colnames(dat)[grep(prefixe[grep(prefixes[grep("_wikisp",prefixes)],prefixe)],colnames(dat))] <- wikisp_names
 } else {
-  wikisp_names <- x_axis_name
+  wikisp_names <- x_axis_names
 }
 
 link_names <- names(dat)[grep("^link",names(dat))]
