@@ -86,7 +86,7 @@ ui <- navbarPage(windowTitle = titre_fenetre, title=div(tags$a(img(src=logo, sty
                               actionButton("map_reset_input","Reset Inputs"),
                               width = 2
                             ),
-                            mainPanel(leafletOutput("map",height = 850),
+                            mainPanel(leafletOutput("map",height = 1000),
                                       width = 10
                                       )
                           )

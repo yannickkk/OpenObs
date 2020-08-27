@@ -27,11 +27,9 @@ library(magrittr)
 source("scripts/settings.R")
 
 ########lien vers les scripts de telechargement des donnees et d'autorisation d'acces
-source("access/access_box.R")
+#source("access/access_box.R")
 
-#dat <- as.data.frame(fread("donnees/data.csv", stringsAsFactors = TRUE))
-#dat <- as.data.frame(fread("donnees/oiseaux.csv", stringsAsFactors = TRUE))
-
+dat <- as.data.frame(fread("donnees/data.csv", stringsAsFactors = TRUE))
 
 if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))]))){
   html <- paste0("donnees/",list.files("donnees/")[grep(".html",list.files("donnees/"))])
