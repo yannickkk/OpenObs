@@ -1,7 +1,7 @@
 ##########variables de la page##############
 if(file.exists("donnees/settings.csv")){
   settings <- read.csv("donnees/settings.csv")
-  if (length(settings[,1]) == 54){
+  if (length(settings[,1]) == 55){
     settings <- settings[-1,]
   }
   
@@ -124,7 +124,9 @@ if(file.exists("donnees/settings.csv")){
   axe_ordonnee <- as.character(settings[47,1])
   axe_abscisse <- as.character(settings[48,1])
   
-  if (settings[49,1] == "TRUE"){
+  nom_fichier <- as.character(settings[49,1])
+  
+  if (settings[50,1] == "TRUE"){
     own_colors <- TRUE
   } else {
     own_colors <- FALSE
@@ -133,10 +135,10 @@ if(file.exists("donnees/settings.csv")){
   
   
   if (own_colors){
-    pal_1 <- str_split(settings[50,1],",") ##Pie_1
-    pal_2 <- str_split(settings[51,1],",") ##Pie_2 
-    pal_3 <- str_split(settings[52,1],",") ##Pie_3
-    pal_4 <- str_split(settings[53,1],",") ##Pie_4
+    pal_1 <- str_split(settings[51,1],",") ##Pie_1
+    pal_2 <- str_split(settings[52,1],",") ##Pie_2 
+    pal_3 <- str_split(settings[53,1],",") ##Pie_3
+    pal_4 <- str_split(settings[54,1],",") ##Pie_4
   }
   
   
@@ -233,6 +235,8 @@ if(file.exists("donnees/settings.csv")){
   
   axe_ordonnee <- "Nombre d'occurences"
   axe_abscisse <- "Especes"
+  
+  nom_fichier <- ""
   
   own_colors <- FALSE 
   
