@@ -37,20 +37,20 @@ if(file.exists(paste0("donnees/",list.files("donnees/")[grep(".html",list.files(
 
 
 wgs84 <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
-if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]))){
-  couche_1 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_1",list.files("access/YC_tiques_individu/"))]), what = "sp")
+if (file.exists(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_1",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]))){
+  couche_1 <- geojsonio::geojson_read(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_1",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]), what = "sp")
   couche_1 <- spTransform(couche_1,wgs84)
 } 
-if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]))){
-  couche_2 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_2",list.files("access/YC_tiques_individu/"))]), what = "sp")
+if (file.exists(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_2",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]))){
+  couche_2 <- geojsonio::geojson_read(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_2",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]), what = "sp")
   couche_2 <- spTransform(couche_2,wgs84)
 } 
-if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]))){
-  couche_3 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_3",list.files("access/YC_tiques_individu/"))]), what = "sp")
+if (file.exists(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_3",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]))){
+  couche_3 <- geojsonio::geojson_read(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_3",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]), what = "sp")
   couche_3 <- spTransform(couche_3,wgs84)
 } 
-if (file.exists(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]))){
-  couche_4 <- geojsonio::geojson_read(paste0("access/YC_tiques_individu/",list.files("access/YC_tiques_individu/")[grep("couche_4",list.files("access/YC_tiques_individu/"))]), what = "sp")
+if (file.exists(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_4",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]))){
+  couche_4 <- geojsonio::geojson_read(paste0(paste0("donnees/",paste0(nom_fichier,"/")),list.files(paste0("donnees/",paste0(nom_fichier,"/")))[grep("couche_4",list.files(paste0("donnees/",paste0(nom_fichier,"/"))))]), what = "sp")
   couche_4 <- spTransform(couche_4,wgs84)
 } 
 
