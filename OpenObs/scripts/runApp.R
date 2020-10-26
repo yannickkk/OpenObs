@@ -1,0 +1,1 @@
+shiny::runApp("../OpenObs", launch.browser = TRUE)
